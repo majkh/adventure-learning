@@ -1,0 +1,3 @@
+export const ADD_ALL_PRODUCTS = 'ADD_ALL_PRODUCTS'
+export const SET_FILTER = 'SET_FILTER'
+export const REMOVE_FILTER = 'REMOVE_FILTER'

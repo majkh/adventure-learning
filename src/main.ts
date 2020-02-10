@@ -5,6 +5,12 @@ import store from './store'
 
 Vue.config.productionTip = false
 
+Vue.filter('currency', function (value: number): string {
+  if (!value) return ''
+
+  return value.toString() + ' $'
+})
+
 new Vue({
   router,
   store,
