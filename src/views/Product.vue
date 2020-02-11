@@ -1,17 +1,16 @@
 <template>
   <div class="product">
-    <ProductListItem v-bind="product" />
+    <ProductItem :product="product" :detailed="true" />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import ProductListItem from "@/components/product/ProductListItem.vue";
-
+import ProductItem from "@/components/product/ProductItem.vue";
 export default {
   name: "product",
   components: {
-    ProductListItem
+    ProductItem
   },
   data() {
     return {
@@ -36,3 +35,9 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+.product {
+  display: flex;
+  justify-content: space-around;
+}
+</style>

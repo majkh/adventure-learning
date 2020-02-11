@@ -22,6 +22,7 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { mapGetters } from "vuex";
 import { CategorySetOption, FilterOptions } from "@/models/FilterModel.ts";
+import { SET_CATEGORY } from "@/store/types/product";
 @Component({
   computed: {
     ...mapGetters(["getProductCategories"])
@@ -30,7 +31,7 @@ import { CategorySetOption, FilterOptions } from "@/models/FilterModel.ts";
 export default class FilterMenu extends Vue {
   setCategory(category: string, subcategory?: string): void {
     this.$store.dispatch(
-      "setCategory",
+      SET_CATEGORY,
       new CategorySetOption(category, subcategory)
     );
     //   .then(() => {

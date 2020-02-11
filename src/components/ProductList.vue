@@ -1,24 +1,28 @@
 <template>
   <div class="list-container">
-    <ProductListItem v-for="product in products" :key="product.Id" v-bind="product" />
+    <ProductItem
+      v-for="product in products"
+      :key="product.Id"
+      :product="product"
+      :detailed="false"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { mapState, mapGetters, mapActions } from "vuex";
-import ProductListItem from "./product/ProductListItem.vue";
+import { ADD_ALL_PRODUCTS } from "@/store/types/product";
+import ProductItem from "./product/ProductItem.vue";
 import { mockProducts } from "@/data/mockdata.ts";
-import axios from "axios";
 
 @Component({
   computed: {
     ...mapState(["count", "products"]),
-    ...mapGetters(["expensiveProducts"]),
-    ...mapActions(["addProducts"])
+    ...mapGetters(["expensiveProducts"])
   },
   components: {
-    ProductListItem
+    ProductItem
   }
 })
 export default class ProductList extends Vue {
@@ -27,11 +31,11 @@ export default class ProductList extends Vue {
   public expensiveProducts!: Array<object>;
   //   public addProducts!: (products: Array<Product>) => void;
   mounted() {
-    axios
-      .get("https://api.coindesk.com/v1/bpi/currentprice.json")
+    this.$http
+      .get("v1/bpi/currentprice.json")
       .then(response => {
         console.log(response);
-        this.$store.dispatch("addProducts", mockProducts);
+        this.$store.dispatch(ADD_ALL_PRODUCTS, mockProducts);
       })
       .catch(error => {
         console.log(error);
@@ -53,8 +57,8 @@ export default class ProductList extends Vue {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: baseline;
+  justify-content: space-around;
+  align-items: flex-start;
   align-content: stretch;
   height: 100%;
 }
