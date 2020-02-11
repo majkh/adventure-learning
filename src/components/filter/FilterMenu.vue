@@ -22,7 +22,7 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { mapGetters } from "vuex";
 import { CategorySetOption, FilterOptions } from "@/models/FilterModel.ts";
-import { SET_CATEGORY } from "@/store/types/product";
+import { SET_CATEGORY } from "@/store/mutation-types";
 @Component({
   computed: {
     ...mapGetters(["getProductCategories"])

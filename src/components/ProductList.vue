@@ -12,7 +12,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { mapState, mapGetters, mapActions } from "vuex";
-import { ADD_ALL_PRODUCTS } from "@/store/types/product";
+import { ADD_ALL_PRODUCTS } from "@/store/mutation-types";
 import ProductItem from "./product/ProductItem.vue";
 import { mockProducts } from "@/data/mockdata.ts";
 

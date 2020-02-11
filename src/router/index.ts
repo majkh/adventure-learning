@@ -2,8 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Products from '../views/Products.vue'
-import Login from '../views/Login.vue'
-import Register from '../views/Register.vue'
 import store from '@/store'
 
 Vue.use(VueRouter)
@@ -59,23 +57,7 @@ const routes = [
       // requiresAuth: true
       guest: true
     }
-  },
-  {
-    path: '/login',
-    name: 'login',
-    component: Login,
-    meta: {
-      guest: true
-    }
-  },
-  {
-    path: '/register',
-    name: 'register',
-    component: Register,
-    meta: {
-      guest: true
-    }
-  },
+  }
 ]
 
 const router = new VueRouter({
