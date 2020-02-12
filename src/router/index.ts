@@ -35,7 +35,17 @@ const routes = [
     meta: {
       guest: true
     }
-  }, {
+  },
+  {
+    path: '/secret',
+    name: 'secret',
+    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    meta: {
+      requireAuth: true
+    }
+  }
+
+  , {
     path: '/product/:id',
     name: 'product',
     // route level code-splitting
@@ -61,6 +71,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
+  mode: 'history',
   routes
 })
 

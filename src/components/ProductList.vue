@@ -57,7 +57,7 @@ export default class ProductList extends Vue {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: flex-start;
   align-content: stretch;
   height: 100%;

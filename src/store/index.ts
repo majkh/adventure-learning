@@ -4,7 +4,7 @@ import Product from '@/models/ProductModel.ts'
 import { FilterOptions, FilterSetOption, CategorySetOption } from '@/models/FilterModel'
 import { productCategories, mockBikeProducts } from '@/data/mockdata.ts'
 import axios from "axios";
-import { ADD_ALL_PRODUCTS, SET_FILTER, ADD_TO_CART, REMOVE_FILTER, SET_CATEGORY } from './mutation-types'
+import { ADD_ALL_PRODUCTS, SET_FILTER, ADD_TO_CART, REMOVE_FILTER, SET_SELECTED_CATEGORY } from './mutation-types'
 
 Vue.use(Vuex)
 
@@ -53,7 +53,7 @@ export default new Vuex.Store({
     [SET_FILTER](context, payload: FilterSetOption) {
       context.commit(SET_FILTER, payload);
     },
-    async [SET_CATEGORY](context, payload: CategorySetOption) {
+    async [SET_SELECTED_CATEGORY](context, payload: CategorySetOption) {
       await context.dispatch(SET_FILTER, new FilterSetOption('Category', payload.Category));
       if (payload.SubCategory !== undefined) {
         await context.dispatch(SET_FILTER, new FilterSetOption('SubCategory', payload.SubCategory));

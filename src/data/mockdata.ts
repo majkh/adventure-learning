@@ -134,7 +134,25 @@ export const productCategories = [{
     Active: false
 }, {
     Id: 1,
+    Name: 'Accessories',
+    SubCategories: [{ Id: 1, Name: 'Mountain Bikes' }, { Id: 2, Name: 'Road Bikes' }, { Id: 3, Name: 'Touring Bikes' }, { Id: 4, Name: 'City Bikes' }],
+    Active: false
+}, {
+    Id: 2,
     Name: 'Bikes',
     SubCategories: [{ Id: 1, Name: 'Mountain Bikes' }, { Id: 2, Name: 'Road Bikes' }, { Id: 3, Name: 'Touring Bikes' }, { Id: 4, Name: 'City Bikes' }],
     Active: false
-}]
+}, {
+    Id: 3,
+    Name: 'Clothing',
+    SubCategories: [{ Id: 1, Name: 'Mountain Bikes' }, { Id: 2, Name: 'Road Bikes' }, { Id: 3, Name: 'Touring Bikes' }, { Id: 4, Name: 'City Bikes' }, { Id: 5, Name: 'Electric Bikes' }],
+    Active: false
+}, {
+    Id: 4,
+    Name: 'Components',
+    SubCategories: [{ Id: 1, Name: 'Handlebars' }, { Id: 2, Name: 'Bottom Brackets' }, { Id: 3, Name: 'Brakes' }, { Id: 4, Name: 'Chains' },
+    { Id: 5, Name: 'Handlebars' }, { Id: 6, Name: 'Bottom Brackets' }, { Id: 7, Name: 'Brakes' }, { Id: 8, Name: 'Chains' },
+    { Id: 8, Name: 'Handlebars' }, { Id: 9, Name: 'Bottom Brackets' }, { Id: 10, Name: 'Brakes' }, { Id: 11, Name: 'Chains' }],
+    Active: false
+}
+]

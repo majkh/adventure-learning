@@ -1,18 +1,18 @@
 <template>
   <div class="products">
-    <FilterMenu />
+    <CategoryMenu />
     <ProductList />
   </div>
 </template>
 
 <script>
 import ProductList from "@/components/ProductList.vue";
-import FilterMenu from "@/components/filter/FilterMenu.vue";
+import CategoryMenu from "@/components/filter/CategoryMenu.vue";
 export default {
   name: "products",
   components: {
     ProductList,
-    FilterMenu
+    CategoryMenu
   }
 };
 </script>
