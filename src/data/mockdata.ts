@@ -1,5 +1,5 @@
 
-import Product from "@/models/ProductModel.ts";
+import { Product } from "@/store/product/types";
 
 export const mockProducts: Array<Product> = [
     {

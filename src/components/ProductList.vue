@@ -11,15 +11,16 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { mapState, mapGetters, mapActions } from "vuex";
-import { ADD_ALL_PRODUCTS } from "@/store/mutation-types";
+// import { mapState, mapGetters, mapActions } from "vuex";
 import ProductItem from "./product/ProductItem.vue";
 import { mockProducts } from "@/data/mockdata.ts";
+import { createNamespacedHelpers } from "vuex";
+const { mapState, mapActions } = createNamespacedHelpers("products");
 
 @Component({
   computed: {
     ...mapState(["count", "products"]),
-    ...mapGetters(["expensiveProducts"])
+    ...mapActions(["addProducts"])
   },
   components: {
     ProductItem
@@ -35,7 +36,8 @@ export default class ProductList extends Vue {
       .get("v1/bpi/currentprice.json")
       .then(response => {
         console.log(response);
-        this.$store.dispatch(ADD_ALL_PRODUCTS, mockProducts);
+        // this.$store.dispatch("addProducts", mockProducts);
+        this.$store.dispatch("products/ADD_ALL_PRODUCTS", mockProducts);
       })
       .catch(error => {
         console.log(error);

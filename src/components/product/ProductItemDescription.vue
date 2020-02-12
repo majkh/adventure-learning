@@ -5,7 +5,7 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import Product from "@/models/ProductModel";
+import { Product } from "@/store/product/types";
 @Component
 export default class ProductItemDescription extends Vue {
   @Prop() private product!: Product;

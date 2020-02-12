@@ -1,15 +1,15 @@
 <template>
   <div id="app">
-    <Menu />
+    <NavMenu />
     <router-view />
   </div>
 </template>
 <script>
-import Menu from "@/components/Menu.vue";
+import NavMenu from "@/components/NavMenu.vue";
 
 export default {
   name: "app",
-  components: { Menu }
+  components: { NavMenu }
 };
 </script>
 <style lang="scss">

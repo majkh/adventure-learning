@@ -11,7 +11,7 @@
 </template>
 <script lang="ts">
 import Vue from "vue";
-export default class Menu extends Vue {}
+export default class NavMenu extends Vue {}
 </script>
 <style lang="scss" scoped>
 .menu-container {

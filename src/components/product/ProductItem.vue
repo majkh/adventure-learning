@@ -16,7 +16,7 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import Product from "../../models/ProductModel";
+import { Product } from "@/store/product/types";
 import ProductItemDescription from "./ProductItemDescription.vue";
 @Component({
   components: {
@@ -26,12 +26,6 @@ import ProductItemDescription from "./ProductItemDescription.vue";
 export default class ProductItem extends Vue {
   @Prop() private product!: Product;
   @Prop() private detailed!: boolean;
-  // @Prop() private Name!: string;
-  // @Prop() private Quantity!: number;
-  // @Prop() private Price!: number;
-  // viewProduct(): void {
-  //   this.$router.push({ name: "product", params: { id: this.Id } });
-  // }
 }
 </script>
 

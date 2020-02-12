@@ -3,7 +3,7 @@
     <div class="category-menu-list">
       <div
         @mouseover="activeCategory = category"
-        v-for="category in getProductCategories"
+        v-for="category in productCategories"
         :key="category.Id"
       >
         <div @click="setCategory(category.Id)" class="category-menu-item">{{category.Name}}</div>
@@ -25,11 +25,13 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { mapGetters } from "vuex";
-import { CategorySetOption, FilterOptions } from "@/models/FilterModel.ts";
-import { SET_SELECTED_CATEGORY } from "@/store/mutation-types";
+import { createNamespacedHelpers } from "vuex";
+import { CategorySetOption } from "../../store/product/types";
+const { mapState, mapActions } = createNamespacedHelpers("products");
+
 @Component({
   computed: {
-    ...mapGetters(["getProductCategories"])
+    ...mapState(["productCategories"])
   },
   data() {
     return {
@@ -38,18 +40,13 @@ import { SET_SELECTED_CATEGORY } from "@/store/mutation-types";
   }
 })
 export default class CategoryMenu extends Vue {
-  setCategory(category: string, subcategory?: string): void {
-    this.$store.dispatch(
-      SET_SELECTED_CATEGORY,
-      new CategorySetOption(category, subcategory)
-    );
-    //   .then(() => {
-    //     this.$router.push({
-    //       path: "search",
-    //       query: this.$store.getters.getFilter
-    //     });
-    //   });
-  }
+  setCategory = (category: string, subcategory?: string): void => {
+    const categoryOption: CategorySetOption = {
+      Category: category,
+      SubCategory: subcategory
+    };
+    this.$store.dispatch("products/setCategory", categoryOption);
+  };
 }
 </script>
 
