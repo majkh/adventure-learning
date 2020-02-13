@@ -9,6 +9,8 @@ export const state: ProductState = {
     products: new Array<Product>(),
     productCategories: undefined,
     currentFilter: new FilterOptions(),
+    skip: -1,
+    take: 0,
     cart: undefined
 };
 

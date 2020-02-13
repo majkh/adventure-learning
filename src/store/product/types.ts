@@ -2,6 +2,8 @@ export interface ProductState {
     products: Array<Product>;
     productCategories?: Array<ProductCategories>;
     currentFilter: FilterOptions;
+    take: number;
+    skip: number;
     cart?: Array<Product>;
 }
 
@@ -47,10 +49,6 @@ export interface CategorySetOption {
     SubCategory?: string;
 }
 
-export const CreateCategorySetOption = (cat: string, sub: string): CategorySetOption => {
-    return { Category: cat, SubCategory: sub }
-}
-
 export interface FilterSetOption {
     Property: keyof FilterOptions;
     Value: string;
@@ -69,7 +67,7 @@ export class FilterOptions {
     }
 }
 
-export interface ProductSubCategories {
+interface ProductSubCategories {
     productSubcategoryId: number;
     name: string;
 }

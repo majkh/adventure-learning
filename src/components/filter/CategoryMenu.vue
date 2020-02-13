@@ -42,7 +42,7 @@ const { mapState, mapActions } = createNamespacedHelpers("products");
     };
   },
   created() {
-    this.$store.dispatch("products/setAllCategories");
+    this.$store.dispatch("products/CATEGORY_ADD_ALL");
   }
 })
 export default class CategoryMenu extends Vue {
@@ -51,7 +51,7 @@ export default class CategoryMenu extends Vue {
       Category: category,
       SubCategory: subcategory
     };
-    this.$store.dispatch("products/setCategory", categoryOption);
+    this.$store.dispatch("products/CATEGORY_SET_SELECTED", categoryOption);
   };
 }
 </script>

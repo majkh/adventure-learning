@@ -32,14 +32,11 @@ export default class ProductList extends Vue {
   public expensiveProducts!: Array<object>;
   //   public addProducts!: (products: Array<Product>) => void;
   mounted() {
+    this.$store.dispatch("products/PRODUCTS_ADD_ALL", { skip: 0, take: 50 });
     this.$http
       .get("product")
       .then(response => {
         // this.$store.dispatch("addProducts", mockProducts);
-        this.$store.dispatch(
-          "products/ADD_ALL_PRODUCTS",
-          response.data as Array<Product>
-        );
       })
       .catch(error => {
         console.log(error);

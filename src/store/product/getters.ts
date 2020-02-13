@@ -4,15 +4,18 @@ import { RootState } from '../types';
 
 export const getters: GetterTree<ProductState, RootState> = {
     getProductById: (state) => (id: number) => {
-        const debugProduct = state.products.find(product => {
-            return product.productId === id
-        })
-        return state.products.find(product => product.productId === id) // fetch api if not exists
+        return state.products.find(product => product.productId === id)
     },
     getProductCategories: state => {
         return state.productCategories
     },
     getFilter: state => {
         return state.currentFilter
+    },
+    getTake: state => {
+        return state.take
+    },
+    getSkip: state => {
+        return state.skip
     }
 };

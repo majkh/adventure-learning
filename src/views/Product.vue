@@ -5,7 +5,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import ProductItem from "@/components/product/ProductItem.vue";
 import { createNamespacedHelpers, mapActions } from "vuex";
 const { mapGetters } = createNamespacedHelpers("products");
@@ -36,7 +35,7 @@ export default {
   },
   methods: {
     fetchData() {
-      this.$store.dispatch("products/UPDATE_PRODUCT", this.$route.params.id);
+      this.$store.dispatch("products/PRODUCT_UPDATE", this.$route.params.id);
     }
   }
 };

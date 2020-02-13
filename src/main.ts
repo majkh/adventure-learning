@@ -8,11 +8,6 @@ import VueAxios from 'vue-axios'
 
 const baseURL: string = 'https://awproject.azurewebsites.net/v1/';
 
-// const baseURL: string = 'https://api.coindesk.com/';
-
-// const graphApiBase = `https://graph.windows.net`
-// const graphApiResource = '86592948-26f1-48a2-b7fa-09b99e2aa63e'
-
 // const profile = AuthenticationContext.user.profile
 Vue.use(Adal, {
   config: {
@@ -35,9 +30,8 @@ export const axiosInstance = axios.create({
   baseURL: baseURL,
   headers: {
     'Access-Control-Allow-Origin': '*',
-    // 'Content-Type': 'application/x-www-form-urlencoded'
+    // 'Authorization': localStorage.getItem('adal.idtoken')
   },
-  // headers: { 'Authorization': localStorage.getItem('adal.idtoken') }
 });
 
 axiosInstance.interceptors.response.use(undefined, function (err) {
@@ -54,7 +48,7 @@ axiosInstance.interceptors.response.use(undefined, function (err) {
     else if (err.status === 405) {
       console.log("DEBUG", err)
     }
-    console.log("DEeeeeeeeeBUG", err)
+    console.log("DEBUG no status code", err)
     throw err;
   });
 });
@@ -62,19 +56,13 @@ axiosInstance.interceptors.response.use(undefined, function (err) {
 
 Vue.use({
   install(vue, opts = {}) {
-    // Configures an axios http client with a interceptor to auto-acquire tokens
     vue.prototype.$http = axiosInstance
   }
 })
 
-
-// Vue.use(VueAxios, axios)
-
-
 Vue.config.productionTip = false
 
 Vue.filter('currency', function (value: number): string {
-
   return value.toString() + ' $'
 })
 
