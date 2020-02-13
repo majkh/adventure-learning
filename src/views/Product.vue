@@ -1,12 +1,14 @@
 <template>
   <div class="product">
-    <ProductItem :product="product" :detailed="true" />
+    <ProductItem v-if="product" :product="product" :detailed="true" />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import ProductItem from "@/components/product/ProductItem.vue";
+import { createNamespacedHelpers, mapActions } from "vuex";
+const { mapGetters } = createNamespacedHelpers("products");
 export default {
   name: "product",
   components: {
@@ -14,10 +16,14 @@ export default {
   },
   data() {
     return {
-      loading: false,
-      product: null,
-      error: null
+      id: undefined
     };
+  },
+  computed: {
+    ...mapGetters(["getProductById"]),
+    product() {
+      return this.getProductById(parseInt(this.$route.params.id));
+    }
   },
   created() {
     // fetch the data when the view is created and the data is
@@ -30,7 +36,7 @@ export default {
   },
   methods: {
     fetchData() {
-      this.product = this.$store.getters.getProductById(this.$route.params.id);
+      this.$store.dispatch("products/UPDATE_PRODUCT", this.$route.params.id);
     }
   }
 };

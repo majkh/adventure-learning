@@ -5,12 +5,41 @@ export interface ProductState {
     cart?: Array<Product>;
 }
 
+interface ProductPhoto {
+    productPhotoID: number;
+    thumbNailPhoto: string;
+    thumbNailPhotoFileName: string;
+    largePhoto: string;
+    largePhotoFileName: string;
+}
+
+interface ProductReview {
+    productReviewID: number,
+    productId: number,
+    reviewerName: string,
+    reviewDate: Date,
+    emailAddress: string,
+    rating: number,
+    comments: string
+}
+
+
 export interface Product {
-    Id: string;
-    Name: string;
-    Quantity: number;
-    Price: number;
-    Description?: string;
+    productId: number;
+    name: string;
+    productNumber: string;
+    color?: string;
+    standardCost: 0;
+    listPrice: 0;
+    size?: string;
+    weight: 0;
+    productLine?: string;
+    class?: string;
+    style?: string;
+    subCategory?: string;
+    model?: string;
+    photo: ProductPhoto;
+    review?: ProductReview;
 }
 
 export interface CategorySetOption {
@@ -41,12 +70,12 @@ export class FilterOptions {
 }
 
 export interface ProductSubCategories {
-    Id: number;
-    Name: string;
+    productSubcategoryId: number;
+    name: string;
 }
 
 export interface ProductCategories {
-    Id: number;
-    Name: string;
-    SubCategories?: Array<ProductSubCategories>;
+    productCategoryID: number;
+    name: string;
+    subCategory?: Array<ProductSubCategories>;
 }

@@ -2,16 +2,32 @@ import { ActionTree } from 'vuex';
 import axios from 'axios';
 import { ProductState, Product, FilterSetOption, CategorySetOption, FilterOptions } from './types';
 import { RootState } from '../types';
-import { ADD_ALL_PRODUCTS, SET_FILTER, REMOVE_FILTER, SET_SELECTED_CATEGORY } from './mutation-types';
-import { mockBikeProducts } from '@/data/mockdata';
+import { ADD_ALL_PRODUCTS, SET_FILTER, REMOVE_FILTER, SET_SELECTED_CATEGORY, SET_CATEGORIES, UPDATE_PRODUCT } from './mutation-types';
+import { axiosInstance } from '@/main';
 
 
 export const actions: ActionTree<ProductState, RootState> = {
-    [ADD_ALL_PRODUCTS](context, products: Array<Product>) {
-        context.commit(ADD_ALL_PRODUCTS, products);
+    [ADD_ALL_PRODUCTS](context, payload: Array<Product>) {
+        console.log("Debug PRODUCTS", payload)
+        context.commit(ADD_ALL_PRODUCTS, payload);
     },
     [SET_FILTER](context, payload: FilterSetOption) {
         context.commit(SET_FILTER, payload);
+    },
+    setAllCategories(context, payload: CategorySetOption) {
+        axiosInstance
+            .get("product/category")
+            .then(response => {
+                context.commit(SET_CATEGORIES, response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    },
+    async [UPDATE_PRODUCT](context, id: number) {
+        return axiosInstance.get(`product/${id}`).then(response => {
+            context.commit(UPDATE_PRODUCT, { id: id, product: response.data })
+        })
     },
     async setCategory(context, payload: CategorySetOption) {
         await context.dispatch(SET_FILTER, { Property: 'Category', Value: payload.Category });
@@ -28,11 +44,10 @@ export const actions: ActionTree<ProductState, RootState> = {
         context.commit(REMOVE_FILTER, key);
     },
     searchProducts(context) {
-        axios
-            .get("https://api.coindesk.com/v1/bpi/currentprice.json")
+        axiosInstance
+            .get("v1/bpi/currentprice.json")
             .then(response => {
-                console.log(response);
-                context.dispatch(ADD_ALL_PRODUCTS, mockBikeProducts);
+                console.log("Debug", response);
             })
             .catch(error => {
                 console.log(error);

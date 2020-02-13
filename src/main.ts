@@ -3,12 +3,17 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import axios from 'axios'
-import { default as Adal, AxiosAuthHttp } from 'vue-adal'
+import { default as Adal, AuthenticationContext } from 'vue-adal'
 import VueAxios from 'vue-axios'
+
+const baseURL: string = 'https://awproject.azurewebsites.net/v1/';
+
+// const baseURL: string = 'https://api.coindesk.com/';
 
 // const graphApiBase = `https://graph.windows.net`
 // const graphApiResource = '86592948-26f1-48a2-b7fa-09b99e2aa63e'
 
+// const profile = AuthenticationContext.user.profile
 Vue.use(Adal, {
   config: {
     // 'common' (multi-tenant gateway) or Azure AD Tenant ID
@@ -26,12 +31,16 @@ Vue.use(Adal, {
   router: router
 })
 
-const instance = axios.create({
-  baseURL: 'https://api.coindesk.com/',
+export const axiosInstance = axios.create({
+  baseURL: baseURL,
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+    // 'Content-Type': 'application/x-www-form-urlencoded'
+  },
   // headers: { 'Authorization': localStorage.getItem('adal.idtoken') }
 });
 
-instance.interceptors.response.use(undefined, function (err) {
+axiosInstance.interceptors.response.use(undefined, function (err) {
   return new Promise(function (resolve, reject) {
     if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
       // if you ever get an unauthorized, logout the user
@@ -39,6 +48,13 @@ instance.interceptors.response.use(undefined, function (err) {
       router.push('/');
       // you can also redirect to /login if needed !
     }
+    else if (err.status === 500) {
+      console.log("DEBUG", err)
+    }
+    else if (err.status === 405) {
+      console.log("DEBUG", err)
+    }
+    console.log("DEeeeeeeeeBUG", err)
     throw err;
   });
 });
@@ -47,10 +63,7 @@ instance.interceptors.response.use(undefined, function (err) {
 Vue.use({
   install(vue, opts = {}) {
     // Configures an axios http client with a interceptor to auto-acquire tokens
-    vue.prototype.$http = axios.create({
-      baseURL: 'https://api.coindesk.com/',
-      // headers: { 'Authorization': localStorage.getItem('adal.idtoken') }
-    })
+    vue.prototype.$http = axiosInstance
   }
 })
 
@@ -61,7 +74,6 @@ Vue.use({
 Vue.config.productionTip = false
 
 Vue.filter('currency', function (value: number): string {
-  if (!value) return ''
 
   return value.toString() + ' $'
 })

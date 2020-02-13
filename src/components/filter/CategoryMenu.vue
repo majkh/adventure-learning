@@ -6,19 +6,22 @@
         v-for="category in productCategories"
         :key="category.Id"
       >
-        <div @click="setCategory(category.Id)" class="category-menu-item">{{category.Name}}</div>
+        <div
+          @click="setCategory(category.productCategoryID)"
+          class="category-menu-item"
+        >{{category.name}}</div>
       </div>
     </div>
     <div
-      v-if="activeCategory && activeCategory.SubCategories.length > 0"
+      v-if="activeCategory && activeCategory.subCategory.length > 0"
       class="subcategory-menu-list"
     >
       <span
-        @click="setCategory(activeCategory.Id, subcategory.Id)"
+        @click="setCategory(activeCategory.productCategoryID, subcategory.productSubcategoryId)"
         class="subcategory-menu-item"
-        v-for="subcategory in activeCategory.SubCategories"
-        :key="subcategory.Id"
-      >{{subcategory.Name}}</span>
+        v-for="subcategory in activeCategory.subCategory"
+        :key="subcategory.productSubcategoryId"
+      >{{subcategory.name}}</span>
     </div>
   </div>
 </template>
@@ -37,6 +40,9 @@ const { mapState, mapActions } = createNamespacedHelpers("products");
     return {
       activeCategory: undefined
     };
+  },
+  created() {
+    this.$store.dispatch("products/setAllCategories");
   }
 })
 export default class CategoryMenu extends Vue {

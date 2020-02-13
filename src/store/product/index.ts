@@ -2,13 +2,12 @@ import { Module } from 'vuex';
 import { getters } from './getters';
 import { actions } from './actions';
 import { mutations } from './mutations';
-import { ProductState, Product, FilterOptions } from './types';
+import { ProductState, Product, FilterOptions, ProductCategories } from './types';
 import { RootState } from '../types';
-import { productCategories } from '@/data/mockdata';
 
 export const state: ProductState = {
     products: new Array<Product>(),
-    productCategories: productCategories,
+    productCategories: undefined,
     currentFilter: new FilterOptions(),
     cart: undefined
 };

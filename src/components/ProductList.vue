@@ -13,7 +13,7 @@
 import { Component, Vue } from "vue-property-decorator";
 // import { mapState, mapGetters, mapActions } from "vuex";
 import ProductItem from "./product/ProductItem.vue";
-import { mockProducts } from "@/data/mockdata.ts";
+import { Product } from "@/store/product/types";
 import { createNamespacedHelpers } from "vuex";
 const { mapState, mapActions } = createNamespacedHelpers("products");
 
@@ -33,11 +33,13 @@ export default class ProductList extends Vue {
   //   public addProducts!: (products: Array<Product>) => void;
   mounted() {
     this.$http
-      .get("v1/bpi/currentprice.json")
+      .get("product")
       .then(response => {
-        console.log(response);
         // this.$store.dispatch("addProducts", mockProducts);
-        this.$store.dispatch("products/ADD_ALL_PRODUCTS", mockProducts);
+        this.$store.dispatch(
+          "products/ADD_ALL_PRODUCTS",
+          response.data as Array<Product>
+        );
       })
       .catch(error => {
         console.log(error);
@@ -59,10 +61,11 @@ export default class ProductList extends Vue {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: flex-start;
+  justify-content: space-around;
+  align-items: baseline;
   align-content: stretch;
   height: 100%;
+  padding-top: 32px;
 }
 ul {
   background-color: black;

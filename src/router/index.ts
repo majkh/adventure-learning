@@ -12,7 +12,7 @@ const routes = [
     name: 'home',
     component: Home,
     meta: {
-      guest: true
+      requiresAuth: true
     }
   },
   {
@@ -20,9 +20,7 @@ const routes = [
     name: 'products',
     component: Products,
     meta: {
-      // requiresAuth: true
-      guest: true
-
+      requiresAuth: true
     }
   },
   {
@@ -32,9 +30,6 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
-    meta: {
-      guest: true
-    }
   },
   {
     path: '/secret',
@@ -53,8 +48,7 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Product.vue'),
     meta: {
-      // requiresAuth: true
-      guest: true
+      requiresAuth: true
     }
   }, {
     path: '/product*',
@@ -64,8 +58,7 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Products.vue'),
     meta: {
-      // requiresAuth: true
-      guest: true
+      requiresAuth: true
     }
   }
 ]
@@ -73,21 +66,6 @@ const routes = [
 const router = new VueRouter({
   mode: 'history',
   routes
-})
-
-router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (store.getters.isAuthenticated) {
-      next()
-    } else {
-      next({
-        path: '/login',
-        params: { nextUrl: to.fullPath }
-      })
-    }
-  } else {
-    next()
-  }
 })
 
 export default router
