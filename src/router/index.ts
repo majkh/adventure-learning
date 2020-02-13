@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Products from '../views/Products.vue'
-import store from '@/store'
+import { authentication } from '@/authentication'
 
 Vue.use(VueRouter)
 
@@ -12,7 +12,7 @@ const routes = [
     name: 'home',
     component: Home,
     meta: {
-      requiresAuth: true
+      requiresAuthentication: true
     }
   },
   {
@@ -20,7 +20,7 @@ const routes = [
     name: 'products',
     component: Products,
     meta: {
-      requiresAuth: true
+      requiresAuthentication: true
     }
   },
   {
@@ -36,7 +36,7 @@ const routes = [
     name: 'secret',
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
     meta: {
-      requireAuth: true
+      requiresAuthentication: true
     }
   }
 
@@ -48,7 +48,7 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Product.vue'),
     meta: {
-      requiresAuth: true
+      requiresAuthentication: true
     }
   }, {
     path: '/product*',
@@ -58,7 +58,7 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Products.vue'),
     meta: {
-      requiresAuth: true
+      requiresAuthentication: true
     }
   }
 ]
@@ -67,5 +67,19 @@ const router = new VueRouter({
   mode: 'history',
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuthentication)) {
+    // this route requires auth, check if logged in
+    if (authentication.isAuthenticated()) {
+      // only proceed if authenticated.
+      next();
+    } else {
+      authentication.signIn();
+    }
+  } else {
+    next();
+  }
+});
 
 export default router
