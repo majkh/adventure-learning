@@ -25,7 +25,6 @@ interface ProductReview {
     comments: string
 }
 
-
 export interface Product {
     productId: number;
     name: string;

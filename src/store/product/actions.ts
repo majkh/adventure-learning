@@ -3,6 +3,7 @@ import { ProductState, FilterSetOption, CategorySetOption, FilterOptions } from 
 import { RootState } from '../types';
 import { PRODUCTS_ADD_ALL, FILTER_SET, FILTER_REMOVE, CATEGORY_SET_SELECTED, CATEGORY_ADD_ALL, PRODUCT_UPDATE, SKIP_SET } from './mutation-types';
 import { axiosInstance } from '@/main';
+import { mockProducts } from '@/data/mockdata';
 
 
 export const actions: ActionTree<ProductState, RootState> = {
@@ -16,7 +17,10 @@ export const actions: ActionTree<ProductState, RootState> = {
                     commit(PRODUCTS_ADD_ALL, response.data);
                 })
                 .catch(error => {
-                    console.log(error);
+                    //TODO: remove mockdata
+
+                    console.log(error)
+                    commit(PRODUCTS_ADD_ALL, mockProducts);
                 });
         }
     },
