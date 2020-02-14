@@ -16,7 +16,7 @@ export const mutations: MutationTree<ProductState> = {
         }
     },
     [FILTER_SET](state: ProductState, payload: FilterSetOption) {
-        state.currentFilter[payload.Property] = payload.Value;
+        state.currentFilter[payload.Property] = payload.Value ? payload.Value.toString() : undefined;
     },
     [CATEGORY_ADD_ALL](state: ProductState, payload: Array<ProductCategories>) {
         state.productCategories = payload;

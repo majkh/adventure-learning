@@ -3,7 +3,7 @@ import { ProductState, FilterSetOption, CategorySetOption, FilterOptions } from 
 import { RootState } from '../types';
 import { PRODUCTS_ADD_ALL, FILTER_SET, FILTER_REMOVE, CATEGORY_SET_SELECTED, CATEGORY_ADD_ALL, PRODUCT_UPDATE, SKIP_SET, PRODUCTS_SEARCH } from './mutation-types';
 import { axiosInstance } from '@/main';
-import { mockProducts } from '@/data/mockdata';
+import { mockProducts, productCategories } from '@/data/mockdata';
 import ApiProduct from '@/services/api'
 
 
@@ -32,6 +32,9 @@ export const actions: ActionTree<ProductState, RootState> = {
             .then(response => {
                 commit(CATEGORY_ADD_ALL, response);
             })
+            .catch(() => {
+                commit(CATEGORY_ADD_ALL, productCategories)
+            })
     },
     [PRODUCT_UPDATE]({ commit }, id: number) {
         ApiProduct.getSingleProduct(id)
@@ -41,9 +44,8 @@ export const actions: ActionTree<ProductState, RootState> = {
     },
     [CATEGORY_SET_SELECTED]({ commit, dispatch }, payload: CategorySetOption) {
         commit(FILTER_SET, { Property: 'Category', Value: payload.Category });
-        if (payload.SubCategory !== undefined) {
-            commit(FILTER_SET, { Property: 'SubCategory', Value: payload.SubCategory });
-        }
+        commit(FILTER_SET, { Property: 'SubCategory', Value: payload.SubCategory });
+
         dispatch(PRODUCTS_SEARCH);
     },
     [FILTER_REMOVE](context, key: keyof FilterOptions) {

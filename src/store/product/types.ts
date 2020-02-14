@@ -61,6 +61,11 @@ export class FilterOptions {
     Color?: string;
     Size?: string;
     Style?: string;
+    constructor() {
+        this.Category = "";
+        this.SubCategory = "";
+    }
+
 }
 
 interface ProductSubCategories {

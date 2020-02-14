@@ -1,19 +1,21 @@
 <template>
   <div class="item-container">
     <img :src="productImage" />
-    <span class="product-name">
-      <router-link
-        v-if="!detailed"
-        class="product-link"
-        :to="{ name: 'product', params: { id: product.productId }}"
-      >{{product.name}}</router-link>
-      <p v-if="detailed">{{product.name}}</p>
-    </span>
-    <span class="product-info">ProductNumber: {{product.productNumber}}</span>
-    <span class="product-info">Price: {{product.listPrice | currency}}</span>
-    <span class="product-info">Weight: {{product.weight}}</span>
-    <span class="product-info" v-if="product.size">Size: {{product.size }}</span>
-    <span class="product-info" v-if="product.color">Color: {{product.color }}</span>
+    <div class="product-info-row">
+      <span class="product-info product-name">
+        <router-link
+          v-if="!detailed"
+          class="product-link"
+          :to="{ name: 'product', params: { id: product.productId }}"
+        >{{product.name}}</router-link>
+        <p v-if="detailed">{{product.name}}</p>
+      </span>
+      <span class="product-info">{{product.listPrice | currency}}</span>
+    </div>
+    <span class="product-info-row product-info">ProductNumber: {{product.productNumber}}</span>
+    <span class="product-info-row product-info">Weight: {{product.weight}}</span>
+    <span class="product-info-row product-info" v-if="product.size">Size: {{product.size }}</span>
+    <span class="product-info-row product-info" v-if="product.color">Color: {{product.color }}</span>
     <ProductItemDescription v-if="detailed" :product="product" />
   </div>
 </template>
@@ -46,25 +48,44 @@ export default class ProductItem extends Vue {
   padding: 16px;
   display: flex;
   flex-direction: column;
-  border: 1px solid black;
+  border: 1px solid lightgrey;
+  box-shadow: 2px 5px 2px lightgrey;
   border-radius: 5%;
   align-items: center;
   margin: 16px;
-  .product-name {
-    font-size: 24px;
-    font-weight: 500;
-    margin-bottom: 8px;
-    .product-link {
-      text-decoration: none;
-      color: black;
-      &:hover {
-        text-decoration: underline;
-      }
+  text-align: left;
+  font-size: 20px;
+  img {
+    margin-bottom: 16px;
+  }
+  .product-info-row {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: baseline;
+    align-content: stretch;
+    span:first-child {
+      flex-basis: 75%;
+    }
+    span:nth-child(2) {
+      text-align: right;
     }
   }
   .product-info {
-    width: 100%;
-    text-align: left;
+    // width: 100%;
+    &.product-name {
+      font-weight: 500;
+      margin-bottom: 8px;
+      .product-link {
+        text-decoration: none;
+        color: black;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
   }
   .product-image {
     width: 150px;

@@ -467,31 +467,26 @@ export const mockBikeProducts: Array<Product> = [
     }];
 
 export const productCategories = [{
-    productId: 0,
+    productCategoryID: 0,
     name: 'All',
-    SubCategories: [],
-    Active: false
+    subCategory: []
 }, {
-    productId: 1,
+    productCategoryID: 1,
     name: 'Accessories',
-    SubCategories: [{ productId: 1, name: 'Mountain Bikes' }, { productId: 2, name: 'Road Bikes' }, { productId: 3, name: 'Touring Bikes' }, { productId: 4, name: 'City Bikes' }],
-    Active: false
+    subCategory: [{ productSubcategoryId: 1, name: 'Mountain Bikes' }, { productSubcategoryId: 2, name: 'Road Bikes' }, { productSubcategoryId: 3, name: 'Touring Bikes' }, { productSubcategoryId: 4, name: 'City Bikes' }]
 }, {
-    productId: 2,
+    productCategoryID: 2,
     name: 'Bikes',
-    SubCategories: [{ productId: 1, name: 'Mountain Bikes' }, { productId: 2, name: 'Road Bikes' }, { productId: 3, name: 'Touring Bikes' }, { productId: 4, name: 'City Bikes' }],
-    Active: false
+    subCategory: [{ productSubcategoryId: 1, name: 'Mountain Bikes' }, { productSubcategoryId: 2, name: 'Road Bikes' }, { productSubcategoryId: 3, name: 'Touring Bikes' }, { productSubcategoryId: 4, name: 'City Bikes' }]
 }, {
-    productId: 3,
+    productCategoryID: 3,
     name: 'Clothing',
-    SubCategories: [{ productId: 1, name: 'Mountain Bikes' }, { productId: 2, name: 'Road Bikes' }, { productId: 3, name: 'Touring Bikes' }, { productId: 4, name: 'City Bikes' }, { productId: 5, name: 'Electric Bikes' }],
-    Active: false
+    subCategory: [{ productSubcategoryId: 1, name: 'Mountain Bikes' }, { productSubcategoryId: 2, name: 'Road Bikes' }, { productSubcategoryId: 3, name: 'Touring Bikes' }, { productSubcategoryId: 4, name: 'City Bikes' }, { productSubcategoryId: 5, name: 'Electric Bikes' }]
 }, {
-    productId: 4,
+    productCategoryID: 4,
     name: 'Components',
-    SubCategories: [{ productId: 1, name: 'Handlebars' }, { productId: 2, name: 'Bottom Brackets' }, { productId: 3, name: 'Brakes' }, { productId: 4, name: 'Chains' },
-    { productId: 5, name: 'Handlebars' }, { productId: 6, name: 'Bottom Brackets' }, { productId: 7, name: 'Brakes' }, { productId: 8, name: 'Chains' },
-    { productId: 8, name: 'Handlebars' }, { productId: 9, name: 'Bottom Brackets' }, { productId: 10, name: 'Brakes' }, { productId: 11, name: 'Chains' }],
-    Active: false
+    subCategory: [{ productSubcategoryId: 1, name: 'Handlebars' }, { productSubcategoryId: 2, name: 'Bottom Brackets' }, { productSubcategoryId: 3, name: 'Brakes' }, { productSubcategoryId: 4, name: 'Chains' },
+    { productSubcategoryId: 5, name: 'Handlebars' }, { productSubcategoryId: 6, name: 'Bottom Brackets' }, { productSubcategoryId: 7, name: 'Brakes' }, { productSubcategoryId: 8, name: 'Chains' },
+    { productSubcategoryId: 9, name: 'Handlebars' }, { productSubcategoryId: 10, name: 'Bottom Brackets' }, { productSubcategoryId: 11, name: 'Brakes' }, { productSubcategoryId: 12, name: 'Chains' }]
 }
 ]

@@ -9,6 +9,12 @@ export const getters: GetterTree<ProductState, RootState> = {
     getProductCategories: state => {
         return state.productCategories
     },
+    getCategoryActive: (state) => (categoryId: string) => {
+        return state.currentFilter.Category === categoryId.toString()
+    },
+    getSubCategoryActive: (state) => (categoryId: string, subCategoryId: string) => {
+        return state.currentFilter.Category === categoryId.toString() && state.currentFilter.SubCategory === subCategoryId.toString()
+    },
     getFilter: state => {
         return state.currentFilter
     },

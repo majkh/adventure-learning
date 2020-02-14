@@ -15,6 +15,7 @@ export default class NavMenu extends Vue {}
 .menu-container {
   width: 100%;
 
+  background: #f2f2f2;
   .menu-nav {
     padding: 20px;
 
