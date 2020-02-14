@@ -9,24 +9,16 @@ import ApiProduct from '@/services/api'
 
 export const actions: ActionTree<ProductState, RootState> = {
     [PRODUCTS_ADD_ALL]({ commit, dispatch, getters }, payload: { skip: number, take: number }) {
-        // if (getters.getSkip !== payload.skip) {
-        //     dispatch(SKIP_SET, payload.skip)
-        //     axiosInstance
-        //         .get("product")
-        //         .then(response => {
-        //             console.log(response)
-        //             commit(PRODUCTS_ADD_ALL, response.data);
-        //         })
-        //         .catch(error => {
-        //             //TODO: remove mockdata
-
-        //             console.log(error)
-        //             commit(PRODUCTS_ADD_ALL, mockProducts);
-        //         });
-        // }
 
 
-        commit(PRODUCTS_ADD_ALL, mockProducts);
+        ApiProduct.getProducts(payload.skip, payload.take)
+            .then(response => {
+                commit(PRODUCTS_ADD_ALL, response);
+            })
+            .catch(() => {
+                commit(PRODUCTS_ADD_ALL, mockProducts);
+            });
+
     },
     async [FILTER_SET]({ commit, dispatch }, payload: FilterSetOption) {
         commit(FILTER_SET, payload);
@@ -35,20 +27,17 @@ export const actions: ActionTree<ProductState, RootState> = {
     [SKIP_SET]({ commit }, skip: number) {
         commit(SKIP_SET, skip);
     },
-    [CATEGORY_ADD_ALL]({ commit }, payload: CategorySetOption) {
-        axiosInstance
-            .get("product/category")
+    [CATEGORY_ADD_ALL]({ commit }) {
+        ApiProduct.getCategories()
             .then(response => {
-                commit(CATEGORY_ADD_ALL, response.data);
+                commit(CATEGORY_ADD_ALL, response);
             })
-            .catch(error => {
-                console.log(error);
-            });
     },
     [PRODUCT_UPDATE]({ commit }, id: number) {
-        return axiosInstance.get(`product/${id}`).then(response => {
-            commit(PRODUCT_UPDATE, { id: id, product: response.data })
-        })
+        ApiProduct.getSingleProduct(id)
+            .then((response) => {
+                commit(PRODUCT_UPDATE, { id: id, product: response })
+            });
     },
     [CATEGORY_SET_SELECTED]({ commit, dispatch }, payload: CategorySetOption) {
         commit(FILTER_SET, { Property: 'Category', Value: payload.Category });
