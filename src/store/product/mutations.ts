@@ -16,7 +16,6 @@ export const mutations: MutationTree<ProductState> = {
         }
     },
     [FILTER_SET](state: ProductState, payload: FilterSetOption) {
-        console.log("Debug", "Categories", state.currentFilter)
         state.currentFilter[payload.Property] = payload.Value;
     },
     [CATEGORY_ADD_ALL](state: ProductState, payload: Array<ProductCategories>) {

@@ -1,31 +1,36 @@
 import { ActionTree } from 'vuex';
 import { ProductState, FilterSetOption, CategorySetOption, FilterOptions } from './types';
 import { RootState } from '../types';
-import { PRODUCTS_ADD_ALL, FILTER_SET, FILTER_REMOVE, CATEGORY_SET_SELECTED, CATEGORY_ADD_ALL, PRODUCT_UPDATE, SKIP_SET } from './mutation-types';
+import { PRODUCTS_ADD_ALL, FILTER_SET, FILTER_REMOVE, CATEGORY_SET_SELECTED, CATEGORY_ADD_ALL, PRODUCT_UPDATE, SKIP_SET, PRODUCTS_SEARCH } from './mutation-types';
 import { axiosInstance } from '@/main';
 import { mockProducts } from '@/data/mockdata';
+import ApiProduct from '@/services/api'
 
 
 export const actions: ActionTree<ProductState, RootState> = {
     [PRODUCTS_ADD_ALL]({ commit, dispatch, getters }, payload: { skip: number, take: number }) {
-        if (getters.getSkip !== payload.skip) {
-            dispatch(SKIP_SET, payload.skip)
-            axiosInstance
-                .get("product")
-                .then(response => {
-                    console.log(response)
-                    commit(PRODUCTS_ADD_ALL, response.data);
-                })
-                .catch(error => {
-                    //TODO: remove mockdata
+        // if (getters.getSkip !== payload.skip) {
+        //     dispatch(SKIP_SET, payload.skip)
+        //     axiosInstance
+        //         .get("product")
+        //         .then(response => {
+        //             console.log(response)
+        //             commit(PRODUCTS_ADD_ALL, response.data);
+        //         })
+        //         .catch(error => {
+        //             //TODO: remove mockdata
 
-                    console.log(error)
-                    commit(PRODUCTS_ADD_ALL, mockProducts);
-                });
-        }
+        //             console.log(error)
+        //             commit(PRODUCTS_ADD_ALL, mockProducts);
+        //         });
+        // }
+
+
+        commit(PRODUCTS_ADD_ALL, mockProducts);
     },
-    [FILTER_SET]({ commit }, payload: FilterSetOption) {
+    async [FILTER_SET]({ commit, dispatch }, payload: FilterSetOption) {
         commit(FILTER_SET, payload);
+        dispatch(PRODUCTS_SEARCH);
     },
     [SKIP_SET]({ commit }, skip: number) {
         commit(SKIP_SET, skip);
@@ -40,29 +45,22 @@ export const actions: ActionTree<ProductState, RootState> = {
                 console.log(error);
             });
     },
-    async [PRODUCT_UPDATE]({ commit }, id: number) {
+    [PRODUCT_UPDATE]({ commit }, id: number) {
         return axiosInstance.get(`product/${id}`).then(response => {
             commit(PRODUCT_UPDATE, { id: id, product: response.data })
         })
     },
-    async [CATEGORY_SET_SELECTED]({ dispatch }, payload: CategorySetOption) {
-        await dispatch(FILTER_SET, { Property: 'Category', Value: payload.Category });
+    [CATEGORY_SET_SELECTED]({ commit, dispatch }, payload: CategorySetOption) {
+        commit(FILTER_SET, { Property: 'Category', Value: payload.Category });
         if (payload.SubCategory !== undefined) {
-            await dispatch(FILTER_SET, { Property: 'SubCategory', Value: payload.SubCategory });
+            commit(FILTER_SET, { Property: 'SubCategory', Value: payload.SubCategory });
         }
-        dispatch('searchProducts');
+        dispatch(PRODUCTS_SEARCH);
     },
     [FILTER_REMOVE](context, key: keyof FilterOptions) {
         context.commit(FILTER_REMOVE, key);
     },
-    searchProducts(context) {
-        axiosInstance
-            .get("v1/bpi/currentprice.json")
-            .then(response => {
-                console.log("Debug", response);
-            })
-            .catch(error => {
-                console.log(error);
-            });
+    [PRODUCTS_SEARCH]({ commit, getters }) {
+        ApiProduct.searchProducts(getters.getFilter);
     },
 };

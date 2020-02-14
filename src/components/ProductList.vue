@@ -1,11 +1,14 @@
 <template>
-  <div class="list-container">
-    <ProductItem
-      v-for="product in products"
-      :key="product.Id"
-      :product="product"
-      :detailed="false"
-    />
+  <div class="main-wrapper">
+    <ProductFilters />
+    <div class="list-container">
+      <ProductItem
+        v-for="product in products"
+        :key="product.Id"
+        :product="product"
+        :detailed="false"
+      />
+    </div>
   </div>
 </template>
 
@@ -13,6 +16,7 @@
 import { Component, Vue } from "vue-property-decorator";
 // import { mapState, mapGetters, mapActions } from "vuex";
 import ProductItem from "./product/ProductItem.vue";
+import ProductFilters from "./product/ProductFilters.vue";
 import { Product } from "@/store/product/types";
 import { createNamespacedHelpers } from "vuex";
 const { mapState, mapActions } = createNamespacedHelpers("products");
@@ -22,7 +26,8 @@ const { mapState, mapActions } = createNamespacedHelpers("products");
     ...mapState(["products"])
   },
   components: {
-    ProductItem
+    ProductItem,
+    ProductFilters
   }
 })
 export default class ProductList extends Vue {
@@ -36,6 +41,14 @@ export default class ProductList extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.main-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  align-content: stretch;
+}
 .list-container {
   display: flex;
   flex-direction: row;

@@ -54,16 +54,13 @@ export interface FilterSetOption {
 }
 
 export class FilterOptions {
-    Category: string;
-    SubCategory: string;
-    PriceMax: string;
-    PriceMin: string;
-    constructor() {
-        this.Category = '';
-        this.SubCategory = '';
-        this.PriceMax = '';
-        this.PriceMin = '';
-    }
+    Category?: string;
+    SubCategory?: string;
+    PriceMax?: string;
+    PriceMin?: string;
+    Color?: string;
+    Size?: string;
+    Style?: string;
 }
 
 interface ProductSubCategories {

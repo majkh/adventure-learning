@@ -1,5 +1,5 @@
 import { GetterTree } from 'vuex';
-import { ProductState } from './types';
+import { ProductState, Product } from './types';
 import { RootState } from '../types';
 
 export const getters: GetterTree<ProductState, RootState> = {
@@ -17,5 +17,8 @@ export const getters: GetterTree<ProductState, RootState> = {
     },
     getSkip: state => {
         return state.skip
+    },
+    getFilterValues: (state, key: keyof Product) => {
+        return state.products.map(product => product[key])
     }
 };
