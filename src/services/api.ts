@@ -1,11 +1,26 @@
 import { axiosInstance } from '@/main';
+import { authentication } from '@/authentication';
 
 export default class ApiProduct {
-    static searchProducts = (params: any) => {
-        return axiosInstance
-            .get("product/search", {
-                params: params
+    private static get(url: string, params?: any) {
+        return axiosInstance.get(url, {
+            params: params,
+            baseURL: 'https://awproject.azurewebsites.net/v1/',
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Authorization': localStorage.getItem('adal.idtoken')
+            }
+        })
+            .then(response => { return Promise.resolve(response) })
+            .catch(err => {
+                console.log(err);
+                // authentication.signIn(); // TODO: uncomment when authentication is open
+                throw err;
             })
+    }
+
+    static searchProducts = (params: any) => {
+        return ApiProduct.get("product/search", params)
             .then(response => {
                 return Promise.resolve(response.data)
             })
@@ -15,8 +30,7 @@ export default class ApiProduct {
             });
     }
     static getProducts = (skip: number, take: number) => {
-        return axiosInstance
-            .get("product")
+        return ApiProduct.get("product")
             .then(response => {
                 console.log(response)
                 return Promise.resolve(response.data)
@@ -27,8 +41,7 @@ export default class ApiProduct {
             });
     }
     static getCategories = () => {
-        return axiosInstance
-            .get("product/category")
+        return ApiProduct.get("product/category")
             .then(response => {
                 return Promise.resolve(response.data)
             })
@@ -39,7 +52,7 @@ export default class ApiProduct {
     }
 
     static getSingleProduct = (id: number) => {
-        return axiosInstance.get(`product/${id}`)
+        return ApiProduct.get(`product/${id}`)
             .then(response => {
                 return Promise.resolve(response.data)
             })

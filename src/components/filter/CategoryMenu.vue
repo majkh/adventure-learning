@@ -1,5 +1,7 @@
 <template>
   <div class="category-container">
+    <button @click="show = !show">Toggle render</button>
+
     <div class="category-menu-list">
       <div
         @mouseover="activeCategory = category"
@@ -10,18 +12,21 @@
         :class="{'item-active': getCategoryActive(category.productCategoryID)}"
       >{{category.name}}</div>
     </div>
-    <div
-      v-if="activeCategory && activeCategory.subCategory.length > 0"
-      class="subcategory-menu-list"
-    >
-      <span
-        v-for="subcategory in activeCategory.subCategory"
-        :key="subcategory.productSubcategoryId"
-        @click="setCategory(activeCategory.productCategoryID, subcategory.productSubcategoryId)"
-        class="subcategory-menu-item"
-        :class="{'item-active': getSubCategoryActive(activeCategory.productCategoryID, subcategory.productSubcategoryId)}"
-      >{{subcategory.name}}</span>
-    </div>
+
+    <transition name="slide-fade">
+      <div
+        v-if="activeCategory && activeCategory.subCategory.length > 0"
+        class="subcategory-menu-list"
+      >
+        <span
+          v-for="subcategory in activeCategory.subCategory"
+          :key="subcategory.productSubcategoryId"
+          @click="setCategory(activeCategory.productCategoryID, subcategory.productSubcategoryId)"
+          class="subcategory-menu-item"
+          :class="{'item-active': getSubCategoryActive(activeCategory.productCategoryID, subcategory.productSubcategoryId)}"
+        >{{subcategory.name}}</span>
+      </div>
+    </transition>
   </div>
 </template>
 <script lang="ts">
@@ -39,7 +44,8 @@ const { mapState, mapActions, mapGetters } = createNamespacedHelpers(
   },
   data() {
     return {
-      activeCategory: undefined
+      activeCategory: undefined,
+      show: false
     };
   },
   created() {
@@ -100,5 +106,16 @@ export default class CategoryMenu extends Vue {
   .item-active {
     color: #42b983;
   }
+}
+.slide-fade-enter-active {
+  transition: all 0.8s ease;
+}
+// .slide-fade-leave-active {
+//   transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
+// }
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateY(-50px);
+  opacity: 0;
 }
 </style>
