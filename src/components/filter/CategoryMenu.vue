@@ -1,7 +1,5 @@
 <template>
   <div class="category-container">
-    <button @click="show = !show">Toggle render</button>
-
     <div class="category-menu-list">
       <div
         @mouseover="activeCategory = category"
@@ -65,7 +63,7 @@ export default class CategoryMenu extends Vue {
 
 <style lang="scss" scoped>
 .category-container {
-  background: #f2f2f2;
+  background: $main-color;
   display: block;
   .category-menu-list {
     display: flex;
@@ -76,7 +74,7 @@ export default class CategoryMenu extends Vue {
     align-content: stretch;
     padding-bottom: 16px;
     .category-menu-item {
-      font-size: 24px;
+      font-size: $font-size-large;
       padding: 0 16px;
       text-align: left;
       cursor: pointer;
@@ -85,7 +83,7 @@ export default class CategoryMenu extends Vue {
   .subcategory-menu-list {
     padding: 16px 0;
     margin: 0 auto;
-    margin-bottom: 32px;
+    margin-bottom: $margin;
     width: 50%;
     display: flex;
     flex-direction: row;
@@ -97,14 +95,14 @@ export default class CategoryMenu extends Vue {
 
   .subcategory-menu-item {
     flex-basis: 33%;
-    font-size: 16px;
+    font-size: $font-size-normal;
     // padding-right: 16px;
     text-align: center;
     cursor: pointer;
   }
 
   .item-active {
-    color: #42b983;
+    color: $text-active;
   }
 }
 .slide-fade-enter-active {

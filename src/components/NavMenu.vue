@@ -15,15 +15,15 @@ export default class NavMenu extends Vue {}
 .menu-container {
   width: 100%;
 
-  background: #f2f2f2;
+  background: $main-color;
   .menu-nav {
-    padding: 20px;
+    padding: $padding/2;
 
     a {
       font-weight: bold;
-      color: #2c3e50;
-      padding-left: 8px;
-      padding-right: 8px;
+      color: $text-color;
+      padding-left: $padding/4;
+      padding-right: $padding/4;
       border-left: 1px solid black;
       &:first-child {
         padding-left: 0;
@@ -31,7 +31,7 @@ export default class NavMenu extends Vue {}
       }
 
       &.router-link-exact-active {
-        color: #42b983;
+        color: $text-active;
       }
     }
   }

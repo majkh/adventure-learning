@@ -32,18 +32,18 @@ export default class ProductListItem extends Vue {
 <style lang="scss" scoped>
 .item-container {
   flex-basis: 26%;
-  padding: 16px;
+  padding: $padding/2;
   display: flex;
   flex-direction: column;
   border: 1px solid lightgrey;
   box-shadow: 2px 5px 2px lightgrey;
   border-radius: 5%;
   align-items: center;
-  margin: 16px;
+  margin: $margin/2;
   text-align: left;
-  font-size: 20px;
+  font-size: $font-size-medium;
   img {
-    margin-bottom: 16px;
+    margin-bottom: $margin/2;
   }
   .product-info-row {
     width: 100%;
@@ -64,7 +64,7 @@ export default class ProductListItem extends Vue {
     // width: 100%;
     &.product-name {
       font-weight: 500;
-      margin-bottom: 8px;
+      margin-bottom: $margin/4;
       .product-link {
         text-decoration: none;
         color: black;

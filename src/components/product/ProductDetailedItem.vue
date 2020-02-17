@@ -4,13 +4,15 @@
       <img :src="this.product.photo.largePhoto|decode64Image" />
     </div>
     <div class="product-info-container">
-      <span class="product-info-text-name">{{product.name}}</span>
+      <div class="product-info-row">
+        <span class="product-info-text-name">{{product.name}}</span>
+        <span class="product-info-text-number">#{{product.productNumber}}</span>
+      </div>
       <span class="product-info-text-price">{{product.listPrice | currency}}</span>
-      <span>Rating: {{avgRating}} of {{product.review.length}} reviewers</span>
-      <span class="product-info-text">ProductNumber: {{product.productNumber}}</span>
       <span class="product-info-text">Weight: {{product.weight}}</span>
       <span class="product-info-text" v-if="product.size">Size: {{product.size }}</span>
       <span class="product-info-text" v-if="product.color">Color: {{product.color }}</span>
+      <span>Rating: {{avgRating}} stars out of {{product.review.length}} reviewers</span>
     </div>
   </div>
 </template>
@@ -37,7 +39,7 @@ export default class ProductDetailedItem extends Vue {
 .product-container {
   width: 80%;
   margin: 0 auto;
-  margin-top: 32px;
+  margin-top: $margin;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -47,7 +49,7 @@ export default class ProductDetailedItem extends Vue {
 }
 
 .product-image {
-  margin-right: 64px;
+  margin-right: $margin;
   flex-basis: 40%;
   img {
     width: 350px;
@@ -63,17 +65,29 @@ export default class ProductDetailedItem extends Vue {
   align-items: stretch;
   align-content: stretch;
   text-align: left;
+  .product-info-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: stretch;
+    .product-info-text-number {
+      padding-left: $padding;
+      margin: auto 0;
+    }
+  }
   .product-info-text {
-    font-size: 18px;
+    font-size: $font-size-medium;
     line-height: 27px;
   }
   .product-info-text-name {
-    font-size: 24px;
+    font-size: $font-size-large;
     line-height: 48px;
     font-weight: 700;
   }
   .product-info-text-price {
-    font-size: 16px;
+    font-size: $font-size-normal;
     line-height: 32px;
     font-weight: 700;
   }

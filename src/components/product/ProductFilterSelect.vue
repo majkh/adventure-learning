@@ -43,8 +43,6 @@ export default class ProductFilterSelect extends Vue {
 <style lang="scss" >
 .filter-select {
   margin-left: 32px;
-  // font-size: 24px;
-  // background: white;
   min-width: 104px;
 }
 </style>

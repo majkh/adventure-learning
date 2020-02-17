@@ -45,12 +45,6 @@ export default class ProductFilters extends Vue {
   justify-content: center;
   align-items: baseline;
   align-content: stretch;
-  margin-top: 16px;
+  margin-top: $margin/2;
 }
-
-// .filter-select {
-//   margin-left: 32px;
-//   font-size: 24px;
-//   background: white;
-// }
 </style>

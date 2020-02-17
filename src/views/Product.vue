@@ -46,7 +46,7 @@ export default {
 <style lang="scss" scoped>
 .product-wrapper {
   div {
-    margin-bottom: 32px;
+    margin-bottom: $margin;
   }
 }
 </style>

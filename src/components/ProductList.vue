@@ -56,10 +56,6 @@ export default class ProductList extends Vue {
   justify-content: space-around;
   align-items: stretch;
   align-content: stretch;
-  padding-top: 32px;
-}
-ul {
-  background-color: black;
-  color: white;
+  padding-top: $padding;
 }
 </style>

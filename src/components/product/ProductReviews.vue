@@ -36,9 +36,9 @@ export default class ProductReviews extends Vue {
   align-items: stretch;
   align-content: stretch;
   .review-item {
-    background: #f2f2f2;
-    margin: 16px;
-    padding: 16px;
+    background: $main-color;
+    margin: $margin/2;
+    padding: $padding;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -54,7 +54,7 @@ export default class ProductReviews extends Vue {
 
   .review-info {
     line-height: 24px;
-    font-size: 16px;
+    font-size: $font-size-normal;
     font-weight: 500;
     text-align: right;
     flex-grow: 2;
