@@ -1,6 +1,6 @@
 <template>
   <div class="item-container">
-    <img :src="productImage" />
+    <img :src="this.product.photo.largePhoto|decode64Image" />
     <div class="product-info-row">
       <span class="product-info product-name">
         <router-link
@@ -16,29 +16,16 @@
     <span class="product-info-row product-info">Weight: {{product.weight}}</span>
     <span class="product-info-row product-info" v-if="product.size">Size: {{product.size }}</span>
     <span class="product-info-row product-info" v-if="product.color">Color: {{product.color }}</span>
-    <ProductItemDescription v-if="detailed" :product="product" />
   </div>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { Product } from "@/store/product/types";
-import ProductItemDescription from "./ProductItemDescription.vue";
 import router from "../../router";
-@Component({
-  components: {
-    ProductItemDescription
-  }
-})
-export default class ProductItem extends Vue {
+@Component
+export default class ProductListItem extends Vue {
   @Prop() private product!: Product;
   @Prop() private detailed!: boolean;
-  get productImage(): string {
-    if (this.product.photo && this.product.photo.largePhoto) {
-      return "data:image/jpeg;base64," + this.product.photo.largePhoto;
-    } else {
-      return "";
-    }
-  }
 }
 </script>
 

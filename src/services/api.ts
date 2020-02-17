@@ -1,9 +1,9 @@
-import { axiosInstance } from '@/main';
 import { authentication } from '@/authentication';
+import axios from 'axios'
 
 export default class ApiProduct {
     private static get(url: string, params?: any) {
-        return axiosInstance.get(url, {
+        return axios.get(url, {
             params: params,
             baseURL: 'https://awproject.azurewebsites.net/v1/',
             headers: {

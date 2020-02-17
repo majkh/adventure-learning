@@ -2,7 +2,6 @@ import { ActionTree } from 'vuex';
 import { ProductState, FilterSetOption, CategorySetOption, FilterOptions } from './types';
 import { RootState } from '../types';
 import { PRODUCTS_ADD_ALL, FILTER_SET, FILTER_REMOVE, CATEGORY_SET_SELECTED, CATEGORY_ADD_ALL, PRODUCT_UPDATE, SKIP_SET, PRODUCTS_SEARCH } from './mutation-types';
-import { axiosInstance } from '@/main';
 import { mockProducts, productCategories } from '@/data/mockdata';
 import ApiProduct from '@/services/api'
 
@@ -13,7 +12,8 @@ export const actions: ActionTree<ProductState, RootState> = {
 
         ApiProduct.getProducts(payload.skip, payload.take)
             .then(response => {
-                commit(PRODUCTS_ADD_ALL, response);
+                // commit(PRODUCTS_ADD_ALL, response);
+                commit(PRODUCTS_ADD_ALL, mockProducts);
             })
             .catch(() => {
                 commit(PRODUCTS_ADD_ALL, mockProducts);
@@ -52,6 +52,13 @@ export const actions: ActionTree<ProductState, RootState> = {
         context.commit(FILTER_REMOVE, key);
     },
     [PRODUCTS_SEARCH]({ commit, getters }) {
-        ApiProduct.searchProducts(getters.getFilter);
+        ApiProduct.searchProducts(getters.getFilter)
+            .then(response => {
+                // commit(PRODUCTS_ADD_ALL, response);
+                commit(PRODUCTS_ADD_ALL, mockProducts);
+            })
+            .catch(() => {
+                commit(PRODUCTS_ADD_ALL, mockProducts);
+            });
     },
 };

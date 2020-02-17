@@ -2,7 +2,7 @@
   <div class="main-wrapper">
     <ProductFilters />
     <div class="list-container">
-      <ProductItem
+      <ProductListItem
         v-for="product in products"
         :key="product.Id"
         :product="product"
@@ -15,7 +15,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 // import { mapState, mapGetters, mapActions } from "vuex";
-import ProductItem from "./product/ProductItem.vue";
+import ProductListItem from "./product/ProductListItem.vue";
 import ProductFilters from "./product/ProductFilters.vue";
 import { Product } from "@/store/product/types";
 import { createNamespacedHelpers } from "vuex";
@@ -26,7 +26,7 @@ const { mapState, mapActions } = createNamespacedHelpers("products");
     ...mapState(["products"])
   },
   components: {
-    ProductItem,
+    ProductListItem,
     ProductFilters
   }
 })

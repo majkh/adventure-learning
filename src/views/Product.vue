@@ -1,17 +1,20 @@
 <template>
-  <div class="product">
-    <ProductItem v-if="product" :product="product" :detailed="true" />
+  <div class="product-wrapper">
+    <ProductDetailedItem v-if="product" :product="product" />
+    <ProductReviews v-if="product && product.review" :reviews="product.review" />
   </div>
 </template>
 
 <script>
-import ProductItem from "@/components/product/ProductItem.vue";
+import ProductDetailedItem from "@/components/product/ProductDetailedItem.vue";
+import ProductReviews from "@/components/product/ProductReviews.vue";
 import { createNamespacedHelpers, mapActions } from "vuex";
 const { mapGetters } = createNamespacedHelpers("products");
 export default {
   name: "product",
   components: {
-    ProductItem
+    ProductDetailedItem,
+    ProductReviews
   },
   data() {
     return {
@@ -41,8 +44,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.product {
-  display: flex;
-  justify-content: space-around;
+.product-wrapper {
+  div {
+    margin-bottom: 32px;
+  }
 }
 </style>
