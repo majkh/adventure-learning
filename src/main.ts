@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import { authentication } from './authentication'
-
+// Vue.use(require('vue-moment'));
 
 Vue.config.productionTip = false
 

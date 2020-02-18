@@ -1,6 +1,7 @@
 <template>
   <div class="category-container">
     <div class="category-menu-list">
+      {{synced}}
       <div
         @mouseover="activeCategory = category"
         v-for="category in productCategories"
@@ -37,13 +38,14 @@ const { mapState, mapActions, mapGetters } = createNamespacedHelpers(
 
 @Component({
   computed: {
-    ...mapState(["productCategories"]),
+    ...mapState(["productCategories", "synced"]),
     ...mapGetters(["getCategoryActive", "getSubCategoryActive"])
   },
   data() {
     return {
       activeCategory: undefined,
-      show: false
+      show: false,
+      testt: undefined
     };
   },
   created() {
@@ -58,6 +60,9 @@ export default class CategoryMenu extends Vue {
     };
     this.$store.dispatch("products/CATEGORY_SET_SELECTED", categoryOption);
   };
+  get test() {
+    return this.$store.getters.getSynced();
+  }
 }
 </script>
 

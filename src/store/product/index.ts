@@ -4,6 +4,7 @@ import { actions } from './actions';
 import { mutations } from './mutations';
 import { ProductState, Product, FilterOptions, ProductCategories } from './types';
 import { RootState } from '../types';
+import { Moment } from 'moment'
 
 export const state: ProductState = {
     products: new Array<Product>(),
@@ -11,7 +12,8 @@ export const state: ProductState = {
     currentFilter: new FilterOptions(),
     skip: -1,
     take: 0,
-    cart: undefined
+    cart: undefined,
+    synced: undefined
 };
 
 const namespaced: boolean = true;

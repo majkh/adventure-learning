@@ -1,3 +1,6 @@
+import { Moment } from 'moment'
+
+
 export interface ProductState {
     products: Array<Product>;
     productCategories?: Array<ProductCategories>;
@@ -5,6 +8,7 @@ export interface ProductState {
     take: number;
     skip: number;
     cart?: Array<Product>;
+    synced?: Moment;
 }
 
 interface ProductPhoto {
@@ -41,6 +45,7 @@ export interface Product {
     model?: string;
     photo: ProductPhoto;
     review?: Array<ProductReview>;
+    updated?: Date;
 }
 
 export interface CategorySetOption {

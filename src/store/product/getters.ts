@@ -1,6 +1,7 @@
 import { GetterTree } from 'vuex';
 import { ProductState, Product } from './types';
 import { RootState } from '../types';
+import moment, { Moment } from 'moment'
 
 export const getters: GetterTree<ProductState, RootState> = {
     getProductById: (state) => (id: number) => {
@@ -26,5 +27,15 @@ export const getters: GetterTree<ProductState, RootState> = {
     },
     getFilterValues: (state, key: keyof Product) => {
         return state.products.map(product => product[key])
-    }
+    },
+    getShouldFetch: state => {
+        const compare = -10;
+        if (state.synced) {
+            let now = moment();
+
+            console.log("Debug fetch", moment(state.synced).clone().valueOf() < now.clone().add(compare, 'seconds').valueOf())
+            return moment(state.synced).clone().valueOf() < now.clone().add(compare, 'seconds').valueOf()
+        }
+        return true
+    },
 };
