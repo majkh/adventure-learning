@@ -1,21 +1,25 @@
 <template>
   <div class="filter-container">
-    <ProductFilterSelect :selectOptions="select" v-for="select in filters" :key="select.property" />
-    <!-- <select class="filter-select" v-for="filter in filters" :key="filter.property">
-      <option v-for="option in filter.values" :key="option" :value="option">{{ option }}</option>
-    </select>-->
+    <ProductFilterSelect
+      :selectOptions="select"
+      v-for="select in selectFilters"
+      :key="select.property"
+    />
+    <ProductFilterRange :rangeOptions="range" v-for="range in rangeFilters" :key="range.property" />
   </div>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import ProductFilterSelect from "./ProductFilterSelect.vue";
+import ProductFilterRange from "./ProductFilterRange.vue";
 @Component({
   components: {
-    ProductFilterSelect
+    ProductFilterSelect,
+    ProductFilterRange
   }
 })
 export default class ProductFilters extends Vue {
-  get filters(): Array<{
+  get selectFilters(): Array<{
     property: string;
     name: string;
     values: Array<string | number>;
@@ -34,6 +38,24 @@ export default class ProductFilters extends Vue {
       }
     ];
   }
+  get rangeFilters(): Array<{
+    property: string;
+    name: string;
+    range: { min: number; max: number; defaultValue: number };
+  }> {
+    return [
+      {
+        property: "minPrice",
+        name: "Min Price",
+        range: { min: 0, max: 1000, defaultValue: 0 }
+      },
+      {
+        property: "maxPrice",
+        name: "Max Price",
+        range: { min: 0, max: 1000, defaultValue: 1000 }
+      }
+    ];
+  }
 }
 </script>
 
@@ -43,7 +65,7 @@ export default class ProductFilters extends Vue {
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: center;
-  align-items: baseline;
+  align-items: center;
   align-content: stretch;
   margin-top: $margin/2;
 }

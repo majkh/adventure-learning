@@ -15,8 +15,7 @@ const store: StoreOptions<RootState> = {
     products: productModule
   },
   plugins: [createPersistedState({
-    // paths: ['products.skip']
+    // paths: ['products.products', ]
   })]
 };
-
 export default new Vuex.Store<RootState>(store);

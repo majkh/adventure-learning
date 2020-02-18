@@ -1,8 +1,9 @@
 import { authentication } from '@/authentication';
 import axios from 'axios'
+import { Product, ProductCategories } from '@/store/product/types';
 
 export default class ApiProduct {
-    private static get(url: string, params?: any) {
+    private static get(url: string, params?: any): Promise<any> {
         return axios.get(url, {
             params: params,
             baseURL: 'https://awproject.azurewebsites.net/v1/',
@@ -19,7 +20,7 @@ export default class ApiProduct {
             })
     }
 
-    static searchProducts = (params: any) => {
+    static searchProducts = (params: any): Promise<Array<Product>> => {
         return ApiProduct.get("product/search", params)
             .then(response => {
                 return Promise.resolve(response.data)
@@ -29,7 +30,7 @@ export default class ApiProduct {
                 return Promise.reject(error);
             });
     }
-    static getProducts = (skip: number, take: number) => {
+    static getProducts = (skip: number, take: number): Promise<Array<Product>> => {
         return ApiProduct.get("product")
             .then(response => {
                 console.log(response)
@@ -40,7 +41,7 @@ export default class ApiProduct {
                 return Promise.reject(error);
             });
     }
-    static getCategories = () => {
+    static getCategories = (): Promise<Array<ProductCategories>> => {
         return ApiProduct.get("product/category")
             .then(response => {
                 return Promise.resolve(response.data)
@@ -51,7 +52,7 @@ export default class ApiProduct {
             });
     }
 
-    static getSingleProduct = (id: number) => {
+    static getSingleProduct = (id: number): Promise<Product> => {
         return ApiProduct.get(`product/${id}`)
             .then(response => {
                 return Promise.resolve(response.data)

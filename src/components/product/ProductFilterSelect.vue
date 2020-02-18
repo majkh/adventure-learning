@@ -6,10 +6,6 @@
     :options="selectOptions.values"
     @input="onSelected"
   ></v-select>
-  <!-- <select @change="onChange" v-model="selected" class="filter-select">
-    <option disabled :value="undefined">{{selectOptions.name}}</option>
-    <option v-for="option in selectOptions.values" :key="option" :value="option">{{ option }}</option>
-  </select>-->
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
@@ -39,7 +35,7 @@ export default class ProductFilterSelect extends Vue {
 }
 </script>
 
-<style lang="scss" >
+<style lang="scss" scoped >
 .filter-select {
   margin-left: 32px;
   min-width: 104px;

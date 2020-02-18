@@ -44,7 +44,10 @@ export const actions: ActionTree<ProductState, RootState> = {
         if (state.productCategories) {
             ApiProduct.getCategories()
                 .then(response => {
-                    commit(CATEGORY_ADD_ALL, response);
+                    commit(CATEGORY_ADD_ALL, [...[{
+                        productCategoryID: -1,
+                        name: 'All'
+                    }], ...response]);
                 })
                 .catch(() => {
                     commit(CATEGORY_ADD_ALL, productCategories)
@@ -80,14 +83,19 @@ export const actions: ActionTree<ProductState, RootState> = {
     [FILTER_REMOVE](context, key: keyof FilterOptions) {
         context.commit(FILTER_REMOVE, key);
     },
-    [PRODUCTS_SEARCH]({ commit, getters }) {
-        ApiProduct.searchProducts(getters.getFilter)
+    [PRODUCTS_SEARCH]({ commit, dispatch, state }) {
+        if (state.currentFilter.Category === "-1") {
+            return dispatch(PRODUCTS_ADD_ALL, { skip: 0, take: 50 })
+        }
+        ApiProduct.searchProducts(state.currentFilter)
             .then(response => {
-                // commit(PRODUCTS_ADD_ALL, response);
-                commit(PRODUCTS_ADD_ALL, mockProducts);
+                commit(PRODUCTS_ADD_ALL, response);
+                // commit(PRODUCTS_ADD_ALL, mockProducts);
+                commit(PRODUCTS_SET_SYNCED, -1);
             })
             .catch(() => {
                 commit(PRODUCTS_ADD_ALL, mockProducts);
+                commit(PRODUCTS_SET_SYNCED, -1);
             });
     }
 };

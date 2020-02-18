@@ -1,9 +1,8 @@
-<template>
-  <div class="category-container">
+<template >
+  <div class="category-container" @mouseleave="activeCategory = undefined">
     <div class="category-menu-list">
-      {{synced}}
       <div
-        @mouseover="activeCategory = category"
+        @mouseenter="activeCategory = category"
         v-for="category in productCategories"
         :key="category.Id"
         @click="setCategory(category.productCategoryID)"
@@ -14,7 +13,7 @@
 
     <transition name="slide-fade">
       <div
-        v-if="activeCategory && activeCategory.subCategory.length > 0"
+        v-if="activeCategory && activeCategory.subCategory && activeCategory.subCategory.length > 0"
         class="subcategory-menu-list"
       >
         <span
@@ -38,14 +37,13 @@ const { mapState, mapActions, mapGetters } = createNamespacedHelpers(
 
 @Component({
   computed: {
-    ...mapState(["productCategories", "synced"]),
+    ...mapState(["productCategories"]),
     ...mapGetters(["getCategoryActive", "getSubCategoryActive"])
   },
   data() {
     return {
       activeCategory: undefined,
-      show: false,
-      testt: undefined
+      show: false
     };
   },
   created() {
@@ -60,9 +58,6 @@ export default class CategoryMenu extends Vue {
     };
     this.$store.dispatch("products/CATEGORY_SET_SELECTED", categoryOption);
   };
-  get test() {
-    return this.$store.getters.getSynced();
-  }
 }
 </script>
 
@@ -88,7 +83,6 @@ export default class CategoryMenu extends Vue {
   .subcategory-menu-list {
     padding: 16px 0;
     margin: 0 auto;
-    margin-bottom: $margin;
     width: 50%;
     display: flex;
     flex-direction: row;
@@ -101,7 +95,6 @@ export default class CategoryMenu extends Vue {
   .subcategory-menu-item {
     flex-basis: 33%;
     font-size: $font-size-normal;
-    // padding-right: 16px;
     text-align: center;
     cursor: pointer;
   }
@@ -111,14 +104,14 @@ export default class CategoryMenu extends Vue {
   }
 }
 .slide-fade-enter-active {
-  transition: all 0.8s ease;
+  transition: all 0.4s ease;
 }
-// .slide-fade-leave-active {
-//   transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
-// }
-.slide-fade-enter, .slide-fade-leave-to
-/* .slide-fade-leave-active below version 2.1.8 */ {
-  transform: translateY(-50px);
-  opacity: 0;
+.slide-fade-leave-active {
+  transition: all 0.4s ease;
+}
+.slide-fade-enter,
+.slide-fade-leave-to {
+  transform: translateY(-35px);
+  opacity: 0.5;
 }
 </style>
