@@ -13,7 +13,7 @@ export const state: ProductState = {
     skip: -1,
     take: 0,
     cart: undefined,
-    synced: undefined
+    synced: -1,
 };
 
 const namespaced: boolean = true;

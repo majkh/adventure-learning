@@ -37,20 +37,7 @@ export default class ProductList extends Vue {
   public products!: Array<object>;
   public expensiveProducts!: Array<object>;
   getShouldFetch!: any;
-  mounted() {
-    const shouldsync = this.getShouldFetch;
-
-    console.log("Debug from productlist, shouldsync", this.$store.state);
-    console.log("Debug from productlist this.$store.state", this.$store.state);
-    // this.$store.dispatch("products/PRODUCTS_SET_SYNCED");
-    // console.log(
-    //   "Debug from productlist after this.$store.state",
-    //   this.$store.state
-    // );
-    // console.log(
-    //   "Debug from productlist after this.$store.state",
-    //   this.$store.state.products.synced
-    // );
+  created() {
     this.$store.dispatch("products/PRODUCTS_ADD_ALL", { skip: 0, take: 50 });
   }
 }

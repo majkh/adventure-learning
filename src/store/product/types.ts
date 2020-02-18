@@ -8,7 +8,7 @@ export interface ProductState {
     take: number;
     skip: number;
     cart?: Array<Product>;
-    synced?: Moment;
+    synced?: number;
 }
 
 interface ProductPhoto {
@@ -45,7 +45,7 @@ export interface Product {
     model?: string;
     photo: ProductPhoto;
     review?: Array<ProductReview>;
-    updated?: Date;
+    updated?: number;
 }
 
 export interface CategorySetOption {

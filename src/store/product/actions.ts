@@ -1,46 +1,35 @@
 import { ActionTree } from 'vuex';
-import { ProductState, FilterSetOption, CategorySetOption, FilterOptions } from './types';
+import { ProductState, FilterSetOption, CategorySetOption, FilterOptions, Product } from './types';
 import { RootState } from '../types';
 import { PRODUCTS_ADD_ALL, FILTER_SET, FILTER_REMOVE, CATEGORY_SET_SELECTED, CATEGORY_ADD_ALL, PRODUCT_UPDATE, SKIP_SET, PRODUCTS_SEARCH, PRODUCTS_SET_SYNCED } from './mutation-types';
 import { mockProducts, productCategories } from '@/data/mockdata';
 import ApiProduct from '@/services/api'
-import moment, { Moment } from 'moment'
-import { state } from '.';
+import moment from 'moment'
 
-let shouldFetch = (value?: Moment, compare = -40): boolean => {
-    console.log("DEBUG shouldFetch", value)
+let shouldFetch = (value?: number, compare = 3, unit: 'minutes' | 'seconds' | 'hours' | 'days' = 'minutes'): boolean => {
     if (value) {
-        let now = moment();
-
-        console.log("Debug fetch", moment(value).clone().valueOf() < now.clone().add(compare, 'seconds').valueOf())
-        return moment(value).clone().valueOf() < now.clone().add(compare, 'seconds').valueOf()
+        let now = moment().subtract(compare, unit).valueOf();
+        return value < now
     }
     return true
 }
 
 export const actions: ActionTree<ProductState, RootState> = {
-    async [PRODUCTS_ADD_ALL]({ commit, dispatch, getters }, payload: { skip: number, take: number }) {
+    [PRODUCTS_ADD_ALL]({ commit, state, dispatch }, payload: { skip: number, take: number }) {
 
-        commit(PRODUCTS_ADD_ALL, mockProducts);
         if (shouldFetch(state.synced)) {
+            ApiProduct.getProducts(payload.skip, payload.take)
+                .then(response => {
+                    commit(PRODUCTS_ADD_ALL, response);
+                    // commit(PRODUCTS_ADD_ALL, mockProducts);
+                    commit(PRODUCTS_SET_SYNCED, moment().valueOf());
+                })
+                .catch(() => {
 
-            await commit(PRODUCTS_SET_SYNCED, moment());
-        } else {
-
-            console.log("Debug shouldfetch", state)
-            console.log("Debug shouldfetch", state.synced!.clone().toString())
+                    commit(PRODUCTS_SET_SYNCED, moment().valueOf());
+                    commit(PRODUCTS_ADD_ALL, mockProducts);
+                });
         }
-        // ApiProduct.getProducts(payload.skip, payload.take)
-        //     .then(response => {
-        //         commit(PRODUCTS_ADD_ALL, response);
-        //         // commit(PRODUCTS_ADD_ALL, mockProducts);
-        //         // commit(PRODUCTS_SET_SYNCED, moment());
-        //     })
-        //     .catch(() => {
-
-        //         // commit(PRODUCTS_SET_SYNCED, moment());
-        //         commit(PRODUCTS_ADD_ALL, mockProducts);
-        //     });
 
 
     },
@@ -53,7 +42,6 @@ export const actions: ActionTree<ProductState, RootState> = {
     },
     [CATEGORY_ADD_ALL]({ commit, state }) {
         if (state.productCategories) {
-            console.log("DEBUG CATEGORIES ALREADY LOADED")
             ApiProduct.getCategories()
                 .then(response => {
                     commit(CATEGORY_ADD_ALL, response);
@@ -72,18 +60,12 @@ export const actions: ActionTree<ProductState, RootState> = {
         }
     },
     [PRODUCT_UPDATE]({ commit, state }, id: number) {
-        let now = moment();
-        console.log("DEBUG TIME BEFORE IF", now.toISOString(), "-------", now.subtract(30, 'seconds').toISOString())
-        console.log("DEBUG TIME BEFORE IF", now.valueOf() < now.add(-30, 'seconds').valueOf())
         if (!state.products.find(product => {
-            if (product.productId === id) {
-                console.log("DEBUG TIME", shouldFetch(product.updated))
-            }
-            return product.productId === id && shouldFetch(product.updated)
+            return product.productId === id && shouldFetch(product.updated, 1, 'hours')
         })) {
-            console.log("DEBUG no need for fetch", state.products)
             ApiProduct.getSingleProduct(id)
-                .then((response) => {
+                .then((response: Product) => {
+                    response.updated = moment().valueOf()
                     commit(PRODUCT_UPDATE, { id: id, product: response })
                 });
         }
@@ -107,8 +89,5 @@ export const actions: ActionTree<ProductState, RootState> = {
             .catch(() => {
                 commit(PRODUCTS_ADD_ALL, mockProducts);
             });
-    },
-    [PRODUCTS_SET_SYNCED]({ commit }) {
-        commit(PRODUCTS_SET_SYNCED);
     }
 };

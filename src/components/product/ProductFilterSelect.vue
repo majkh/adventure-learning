@@ -35,7 +35,6 @@ export default class ProductFilterSelect extends Vue {
       Value: this.selected ? this.selected : undefined
     };
     this.$store.dispatch("products/FILTER_SET", setOption);
-    console.log("DEBUG", event, this.selected);
   }
 }
 </script>
