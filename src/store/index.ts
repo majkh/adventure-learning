@@ -6,6 +6,7 @@ import { productModule } from './product/index';
 Vue.use(Vuex);
 
 const store: StoreOptions<RootState> = {
+  strict: process.env.NODE_ENV !== 'production',
   state: {
     version: '1.0.0'
   },

@@ -1,7 +1,7 @@
 <template>
   <div class="product-container">
     <div class="product-image">
-      <img :src="this.product.photo.largePhoto|decode64Image" />
+      <img :src="this.product.photo && this.product.photo.largePhoto|decode64Image" />
     </div>
     <div class="product-info-container">
       <div class="product-info-row">
@@ -12,7 +12,9 @@
       <span class="product-info-text">Weight: {{product.weight}}</span>
       <span class="product-info-text" v-if="product.size">Size: {{product.size }}</span>
       <span class="product-info-text" v-if="product.color">Color: {{product.color }}</span>
-      <span>Rating: {{avgRating}} stars out of {{product.review.length}} reviewers</span>
+      <span
+        v-if="product.review"
+      >Rating: {{avgRating}} stars out of {{product.review.length}} reviewers</span>
     </div>
   </div>
 </template>

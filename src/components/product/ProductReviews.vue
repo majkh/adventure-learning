@@ -6,6 +6,7 @@
       <span class="review-info">{{review.reviewerName}}</span>
       <span class="review-info">{{review.reviewDate}}</span>
     </div>
+    <p v-if="!reviews || !reviews.length">No reviews yet!</p>
   </div>
 </template>
 <script lang="ts">

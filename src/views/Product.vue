@@ -1,7 +1,7 @@
 <template>
   <div class="product-wrapper">
     <ProductDetailedItem v-if="product" :product="product" />
-    <ProductReviews v-if="product && product.review" :reviews="product.review" />
+    <ProductReviews :reviews="product.review" />
   </div>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
   <div class="item-container">
-    <img :src="this.product.photo.largePhoto|decode64Image" />
+    <img :src="this.product.photo && this.product.photo.largePhoto|decode64Image" />
     <div class="product-info-row">
       <span class="product-info product-name">
         <router-link

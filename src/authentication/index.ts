@@ -4,7 +4,7 @@ const config = {
     tenant: '8f47ad71-44ca-48bf-afe3-56b9360a4495',
 
     // Application ID
-    clientId: 'c5439093-cf9d-4310-bcbb-269648632001',
+    clientId: '9650376c-177d-4ef3-aad2-890bd0e89c41',
 
     // Host URI
     redirectUri: 'http://localhost:8080',
