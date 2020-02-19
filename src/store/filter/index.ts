@@ -2,21 +2,18 @@ import { Module } from 'vuex';
 import { getters } from './getters';
 import { actions } from './actions';
 import { mutations } from './mutations';
-import { ProductState, Product } from './types';
+import { FilterState, FilterOptions } from './types';
 import { RootState } from '../types';
-import { Moment } from 'moment'
 
-export const state: ProductState = {
-    products: new Array<Product>(),
-    skip: -1,
-    take: 0,
-    cart: undefined,
-    synced: -1,
-};
+export const state: FilterState = {
+    productCategories: undefined,
+    currentFilter: new FilterOptions(),
+    synced: -1
+}
 
 const namespaced: boolean = true;
 
-export const productModule: Module<ProductState, RootState> = {
+export const filterModule: Module<FilterState, RootState> = {
     namespaced,
     state,
     getters,

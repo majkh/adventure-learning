@@ -13,7 +13,20 @@ export default {
   components: {
     ProductList,
     CategoryMenu
+  },
+  created() {
+    this.$store.dispatch("products/PRODUCTS_ADD_ALL", { skip: 0, take: 50 });
   }
+  // watch: {
+  //   $route(to, from) {
+  //     this.$store.dispatch("products/PRODUCTS_ADD_ALL", { skip: 0, take: 50 });
+  //   }
+  // },
+  // methods: {
+  //   fetchData() {
+  //     this.$store.dispatch("products/PRODUCT_UPDATE", this.$route.params.id);
+  //   }
+  // }
 };
 </script>
 <style lang="scss" scoped>

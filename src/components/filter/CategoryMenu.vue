@@ -30,10 +30,8 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { createNamespacedHelpers } from "vuex";
-import { CategorySetOption } from "../../store/product/types";
-const { mapState, mapActions, mapGetters } = createNamespacedHelpers(
-  "products"
-);
+import { CategorySetOption } from "../../store/filter/types";
+const { mapState, mapGetters } = createNamespacedHelpers("filters");
 
 @Component({
   computed: {
@@ -47,7 +45,7 @@ const { mapState, mapActions, mapGetters } = createNamespacedHelpers(
     };
   },
   created() {
-    this.$store.dispatch("products/CATEGORY_ADD_ALL");
+    this.$store.dispatch("filters/CATEGORY_ADD_ALL");
   }
 })
 export default class CategoryMenu extends Vue {
@@ -56,7 +54,7 @@ export default class CategoryMenu extends Vue {
       Category: category,
       SubCategory: subcategory
     };
-    this.$store.dispatch("products/CATEGORY_SET_SELECTED", categoryOption);
+    this.$store.dispatch("filters/CATEGORY_SET_SELECTED", categoryOption);
   };
 }
 </script>

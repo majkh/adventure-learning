@@ -1,6 +1,7 @@
 import { authentication } from '@/authentication';
 import axios from 'axios'
-import { Product, ProductCategories } from '@/store/product/types';
+import { Product } from '@/store/product/types';
+import { ProductCategories } from '@/store/filter/types';
 
 export default class ApiProduct {
     private static get(url: string, params?: any): Promise<any> {

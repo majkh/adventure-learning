@@ -3,8 +3,6 @@ import { Moment } from 'moment'
 
 export interface ProductState {
     products: Array<Product>;
-    productCategories?: Array<ProductCategories>;
-    currentFilter: FilterOptions;
     take: number;
     skip: number;
     cart?: Array<Product>;
@@ -48,38 +46,3 @@ export interface Product {
     updated?: number;
 }
 
-export interface CategorySetOption {
-    Category: string;
-    SubCategory?: string;
-}
-
-export interface FilterSetOption {
-    Property: keyof FilterOptions;
-    Value: string;
-}
-
-export class FilterOptions {
-    Category?: string;
-    SubCategory?: string;
-    PriceMax?: string;
-    PriceMin?: string;
-    Color?: string;
-    Size?: string;
-    Style?: string;
-    constructor() {
-        this.Category = "";
-        this.SubCategory = "";
-    }
-
-}
-
-interface ProductSubCategories {
-    productSubcategoryId: number;
-    name: string;
-}
-
-export interface ProductCategories {
-    productCategoryID: number;
-    name: string;
-    subCategory?: Array<ProductSubCategories>;
-}

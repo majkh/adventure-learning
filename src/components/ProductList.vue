@@ -37,9 +37,6 @@ export default class ProductList extends Vue {
   public products!: Array<object>;
   public expensiveProducts!: Array<object>;
   getShouldFetch!: any;
-  created() {
-    this.$store.dispatch("products/PRODUCTS_ADD_ALL", { skip: 0, take: 50 });
-  }
 }
 </script>
 

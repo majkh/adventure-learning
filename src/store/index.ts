@@ -3,6 +3,7 @@ import Vuex, { StoreOptions } from 'vuex';
 import { RootState } from './types';
 import { productModule } from './product/index';
 import createPersistedState from "vuex-persistedstate";
+import { filterModule } from './filter';
 
 Vue.use(Vuex);
 
@@ -12,7 +13,8 @@ const store: StoreOptions<RootState> = {
     version: '1.0.0'
   },
   modules: {
-    products: productModule
+    products: productModule,
+    filters: filterModule
   },
   plugins: [createPersistedState({
     // paths: ['products.products', ]

@@ -1,15 +1,16 @@
 import { ActionTree } from 'vuex';
-import { ProductState, FilterSetOption, CategorySetOption, FilterOptions, Product } from './types';
+import { ProductState, Product } from './types';
 import { RootState } from '../types';
-import { PRODUCTS_ADD_ALL, FILTER_SET, FILTER_REMOVE, CATEGORY_SET_SELECTED, CATEGORY_ADD_ALL, PRODUCT_UPDATE, SKIP_SET, PRODUCTS_SEARCH, PRODUCTS_SET_SYNCED } from './mutation-types';
+import { PRODUCTS_ADD_ALL, SKIP_SET, PRODUCTS_SEARCH, PRODUCTS_SET_SYNCED, PRODUCT_UPDATE } from './mutation-types';
 import { mockProducts, productCategories } from '@/data/mockdata';
 import ApiProduct from '@/services/api'
 import moment from 'moment'
+import { FilterOptions } from '../filter/types';
 
 let shouldFetch = (value?: number, compare = 3, unit: 'minutes' | 'seconds' | 'hours' | 'days' = 'minutes'): boolean => {
     if (value) {
         let now = moment().subtract(compare, unit).valueOf();
-        return value < now
+        return value <= now
     }
     return true
 }
@@ -17,7 +18,7 @@ let shouldFetch = (value?: number, compare = 3, unit: 'minutes' | 'seconds' | 'h
 export const actions: ActionTree<ProductState, RootState> = {
     [PRODUCTS_ADD_ALL]({ commit, state, dispatch }, payload: { skip: number, take: number }) {
 
-        if (shouldFetch(state.synced)) {
+        if (shouldFetch(state.synced, 0, 'seconds')) {
             ApiProduct.getProducts(payload.skip, payload.take)
                 .then(response => {
                     commit(PRODUCTS_ADD_ALL, response);
@@ -33,34 +34,8 @@ export const actions: ActionTree<ProductState, RootState> = {
 
 
     },
-    async [FILTER_SET]({ commit, dispatch }, payload: FilterSetOption) {
-        commit(FILTER_SET, payload);
-        dispatch(PRODUCTS_SEARCH);
-    },
     [SKIP_SET]({ commit }, skip: number) {
         commit(SKIP_SET, skip);
-    },
-    [CATEGORY_ADD_ALL]({ commit, state }) {
-        if (state.productCategories) {
-            ApiProduct.getCategories()
-                .then(response => {
-                    commit(CATEGORY_ADD_ALL, [...[{
-                        productCategoryID: -1,
-                        name: 'All'
-                    }], ...response]);
-                })
-                .catch(() => {
-                    commit(CATEGORY_ADD_ALL, productCategories)
-                })
-        } else {
-            ApiProduct.getCategories()
-                .then(response => {
-                    commit(CATEGORY_ADD_ALL, response);
-                })
-                .catch(() => {
-                    commit(CATEGORY_ADD_ALL, productCategories)
-                })
-        }
     },
     [PRODUCT_UPDATE]({ commit, state }, id: number) {
         if (!state.products.find(product => {
@@ -74,20 +49,11 @@ export const actions: ActionTree<ProductState, RootState> = {
         }
 
     },
-    [CATEGORY_SET_SELECTED]({ commit, dispatch }, payload: CategorySetOption) {
-        commit(FILTER_SET, { Property: 'Category', Value: payload.Category });
-        commit(FILTER_SET, { Property: 'SubCategory', Value: payload.SubCategory });
-
-        dispatch(PRODUCTS_SEARCH);
-    },
-    [FILTER_REMOVE](context, key: keyof FilterOptions) {
-        context.commit(FILTER_REMOVE, key);
-    },
-    [PRODUCTS_SEARCH]({ commit, dispatch, state }) {
-        if (state.currentFilter.Category === "-1") {
+    [PRODUCTS_SEARCH]({ commit, dispatch, state }, payload: FilterOptions) {
+        if (payload.Category === "-1") {
             return dispatch(PRODUCTS_ADD_ALL, { skip: 0, take: 50 })
         }
-        ApiProduct.searchProducts(state.currentFilter)
+        ApiProduct.searchProducts(payload)
             .then(response => {
                 commit(PRODUCTS_ADD_ALL, response);
                 // commit(PRODUCTS_ADD_ALL, mockProducts);

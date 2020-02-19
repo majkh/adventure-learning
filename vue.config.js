@@ -1,4 +1,5 @@
 module.exports = {
+    devServer: { https: false, port: "44309" },
     css: {
         loaderOptions: {
             scss: {
