@@ -11,7 +11,7 @@ export default class ApiProduct {
             baseURL: 'https://azuread20200219104755.azurewebsites.net/v1/',
             headers: {
                 'Access-Control-Allow-Origin': '*',
-                'Authorization': localStorage.getItem('adal.idtoken')
+                'Authorization': "Bearer " + localStorage.getItem('adal.idtoken')
             }
         })
             .then(response => { return Promise.resolve(response) })
