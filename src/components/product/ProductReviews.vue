@@ -12,19 +12,10 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { ProductReview } from "@/store/product/types";
-import { createNamespacedHelpers } from "vuex";
-const { mapGetters } = createNamespacedHelpers("products");
+
 @Component
 export default class ProductReviews extends Vue {
-  @Prop() private reviews!: Array<ProductReview>;
-  private showReviews = false;
-  get avgRating(): number {
-    return (
-      this.reviews.reduce((acc, curr) => {
-        return acc + curr.rating;
-      }, 0) / this.reviews.length
-    );
-  }
+  @Prop(Array) private reviews!: Array<ProductReview>;
 }
 </script>
 

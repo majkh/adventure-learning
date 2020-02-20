@@ -11,7 +11,7 @@ export const state: FilterState = {
     synced: -1
 }
 
-const namespaced: boolean = true;
+const namespaced: true = true;
 
 export const filterModule: Module<FilterState, RootState> = {
     namespaced,

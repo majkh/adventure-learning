@@ -2,8 +2,8 @@
   <v-select
     :placeholder="selectOptions.name"
     class="filter-select"
-    v-model="selected"
     :options="selectOptions.values"
+    :value="getFilterValue(selectOptions.property)"
     @input="onSelected"
   ></v-select>
 </template>
@@ -11,26 +11,28 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
+import { createNamespacedHelpers } from "vuex";
+const { mapGetters } = createNamespacedHelpers("filters");
+
 Vue.component("v-select", vSelect);
-@Component
+
+@Component({
+  computed: {
+    ...mapGetters(["getFilterValue"])
+  }
+})
 export default class ProductFilterSelect extends Vue {
-  @Prop() private selectOptions!: {
+  @Prop(Object) private selectOptions!: {
     property: string;
     name: string;
     values: Array<string | number>;
   };
-  private selected: any;
-  data() {
-    return {
-      selected: undefined
-    };
-  }
-  onSelected(event: any) {
+  onSelected(value: any) {
     const setOption = {
       Property: this.selectOptions.property,
-      Value: this.selected ? this.selected : undefined
+      Value: value ? value : undefined
     };
-    this.$store.dispatch("products/FILTER_SET", setOption);
+    this.$store.dispatch("filters/FILTER_SET_AND_SEARCH", setOption);
   }
 }
 </script>

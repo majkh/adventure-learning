@@ -1,7 +1,7 @@
 import { ActionTree } from 'vuex';
 import { FilterState, FilterSetOption, CategorySetOption, FilterOptions } from './types';
 import { RootState } from '../types';
-import { FILTER_SET, FILTER_REMOVE, CATEGORY_SET_SELECTED, CATEGORY_ADD_ALL, CATEGORY_SET_SYNCED, FILTER_CLEAR, } from './mutation-types';
+import { FILTER_SET, FILTER_REMOVE, CATEGORY_SET_SELECTED, CATEGORY_ADD_ALL, CATEGORY_SET_SYNCED, FILTER_CLEAR, FILTER_SET_AND_SEARCH, } from './mutation-types';
 import { productCategories } from '@/data/mockdata';
 import ApiProduct from '@/services/api'
 import moment from 'moment'
@@ -17,9 +17,12 @@ let shouldFetch = (value?: number, compare = 3, unit: 'minutes' | 'seconds' | 'h
 
 export const actions: ActionTree<FilterState, RootState> = {
 
-    [FILTER_SET]({ commit, dispatch, state, getters }, payload: FilterSetOption) {
+    [FILTER_SET]({ commit }, payload: FilterSetOption) {
         commit(FILTER_SET, payload);
-        // dispatch('products/' + PRODUCTS_SEARCH, state.currentFilter, { root: true });
+    },
+    async [FILTER_SET_AND_SEARCH]({ dispatch, state }, payload: FilterSetOption) {
+        await dispatch(FILTER_SET, payload);
+        dispatch('products/' + PRODUCTS_SEARCH, state.currentFilter, { root: true });
     },
     [CATEGORY_ADD_ALL]({ commit, state }) {
         if (shouldFetch(state.synced, 12, 'hours')) {

@@ -25,8 +25,7 @@ import { createNamespacedHelpers } from "vuex";
 const { mapGetters } = createNamespacedHelpers("products");
 @Component
 export default class ProductDetailedItem extends Vue {
-  @Prop() private product!: Product;
-  private showReviews = false;
+  @Prop(Object) private product!: Product;
   get avgRating(): number {
     return this.product.review
       ? this.product.review.reduce((acc, curr) => {

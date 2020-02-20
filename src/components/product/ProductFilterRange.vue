@@ -4,38 +4,42 @@
     <input
       type="range"
       class="filter-select"
-      v-model.number="selected"
+      :value="getFilterValue(rangeOptions.property) || rangeOptions.range.defaultValue"
       v-bind:min="rangeOptions.range.min"
       v-bind:max="rangeOptions.range.max"
       @mouseup="onSelected"
     />
 
-    <span>{{selected}}</span>
+    <span>{{getFilterValue(rangeOptions.property) || rangeOptions.range.defaultValue}}</span>
   </div>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-@Component
+import { createNamespacedHelpers } from "vuex";
+const { mapGetters } = createNamespacedHelpers("filters");
+
+@Component({
+  computed: {
+    ...mapGetters(["getFilterValue"])
+  }
+})
 export default class ProductFilterRange extends Vue {
-  @Prop() private rangeOptions!: {
+  @Prop(Object) private rangeOptions!: {
     property: string;
     name: string;
     range: { min: number; max: number; defaultValue: number };
   };
-  private selected!: number;
-  data() {
-    return {
-      selected: this.rangeOptions.range.defaultValue
-    };
-  }
-  onSelected(event: any) {
-    console.log(typeof this.selected);
-
+  onSelected(event: any): void {
+    const value = event.target.value;
     const setOption = {
       Property: this.rangeOptions.property,
-      Value: this.selected
+      Value:
+        value === this.rangeOptions.range.min ||
+        value === this.rangeOptions.range.max
+          ? undefined
+          : value
     };
-    this.$store.dispatch("products/FILTER_SET", setOption);
+    this.$store.dispatch("filters/FILTER_SET_AND_SEARCH", setOption);
   }
 }
 </script>

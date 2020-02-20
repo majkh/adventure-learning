@@ -4,11 +4,9 @@
     <div class="product-info-row">
       <span class="product-info product-name">
         <router-link
-          v-if="!detailed"
           class="product-link"
           :to="{ name: 'product', params: { id: product.productId }}"
         >{{product.name}}</router-link>
-        <p v-if="detailed">{{product.name}}</p>
       </span>
       <span class="product-info">{{product.listPrice | currency}}</span>
     </div>
@@ -16,16 +14,19 @@
     <span class="product-info-row product-info">Weight: {{product.weight}}</span>
     <span class="product-info-row product-info" v-if="product.size">Size: {{product.size }}</span>
     <span class="product-info-row product-info" v-if="product.color">Color: {{product.color }}</span>
+    <button @click="addToCart(product.productId)">Add to cart</button>
   </div>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { Product } from "@/store/product/types";
-import router from "../../router";
+
 @Component
 export default class ProductListItem extends Vue {
-  @Prop() private product!: Product;
-  @Prop() private detailed!: boolean;
+  @Prop(Object) private product!: Product;
+  addToCart(id: number) {
+    this.$store.dispatch("products/addToCart", id);
+  }
 }
 </script>
 

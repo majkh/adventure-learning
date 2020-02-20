@@ -7,7 +7,8 @@ export default class ApiProduct {
     private static get(url: string, params?: any): Promise<any> {
         return axios.get(url, {
             params: params,
-            baseURL: 'https://awproject.azurewebsites.net/v1/',
+            // baseURL: 'https://awproject.azurewebsites.net/v1/',
+            baseURL: 'https://azuread20200219104755.azurewebsites.net/v1/',
             headers: {
                 'Access-Control-Allow-Origin': '*',
                 'Authorization': localStorage.getItem('adal.idtoken')

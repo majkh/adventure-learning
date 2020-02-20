@@ -13,9 +13,9 @@ export const getters: GetterTree<FilterState, RootState> = {
         return state.currentFilter.Category === categoryId.toString() && state.currentFilter.SubCategory === subCategoryId.toString()
     },
     getFilterValue: (state) => (property: keyof FilterOptions): any => {
-        return state.currentFilter[property] ? state.currentFilter[property] : undefined;
+        return state.currentFilter[property];
     },
-    shouldSearch: state => (): boolean => {
-        return Object.values(state.currentFilter).every(filter => (filter !== undefined || filter !== '' || filter !== '-1'))
+    getIsSubCategoryChoosen: (state) => (): boolean => {
+        return state.currentFilter.SubCategory !== undefined
     }
 };

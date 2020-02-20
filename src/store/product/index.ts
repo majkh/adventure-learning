@@ -10,11 +10,11 @@ export const state: ProductState = {
     products: new Array<Product>(),
     skip: -1,
     take: 0,
-    cart: undefined,
+    cart: new Array<Product>(),
     synced: -1,
 };
 
-const namespaced: boolean = true;
+const namespaced: true = true;
 
 export const productModule: Module<ProductState, RootState> = {
     namespaced,

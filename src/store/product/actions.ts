@@ -1,7 +1,7 @@
 import { ActionTree } from 'vuex';
 import { ProductState, Product } from './types';
 import { RootState } from '../types';
-import { PRODUCTS_ADD_ALL, SKIP_SET, PRODUCTS_SEARCH, PRODUCTS_SET_SYNCED, PRODUCT_UPDATE } from './mutation-types';
+import { PRODUCTS_ADD_ALL, SKIP_SET, PRODUCTS_SEARCH, PRODUCTS_SET_SYNCED, PRODUCT_UPDATE, PRODUCT_ADD_TO_CART } from './mutation-types';
 import { mockProducts, productCategories } from '@/data/mockdata';
 import ApiProduct from '@/services/api'
 import moment from 'moment'
@@ -18,7 +18,7 @@ let shouldFetch = (value?: number, compare = 3, unit: 'minutes' | 'seconds' | 'h
 export const actions: ActionTree<ProductState, RootState> = {
     [PRODUCTS_ADD_ALL]({ commit, state, dispatch }, payload: { skip: number, take: number }) {
 
-        if (shouldFetch(state.synced, 0, 'seconds')) {
+        if (shouldFetch(state.synced, 3, 'minutes')) {
             ApiProduct.getProducts(payload.skip, payload.take)
                 .then(response => {
                     commit(PRODUCTS_ADD_ALL, response);
@@ -50,7 +50,7 @@ export const actions: ActionTree<ProductState, RootState> = {
 
     },
     [PRODUCTS_SEARCH]({ commit, dispatch, state }, payload: FilterOptions) {
-        if (payload.Category === "-1") {
+        if (Object.values(payload).every(el => el === undefined)) {
             return dispatch(PRODUCTS_ADD_ALL, { skip: 0, take: 50 })
         }
         ApiProduct.searchProducts(payload)
@@ -63,5 +63,10 @@ export const actions: ActionTree<ProductState, RootState> = {
                 commit(PRODUCTS_ADD_ALL, mockProducts);
                 commit(PRODUCTS_SET_SYNCED, -1);
             });
+    },
+    addToCart({ commit, getters }, id: number) {
+
+        const product = getters.getProductById(id);
+        commit(PRODUCT_ADD_TO_CART, product)
     }
 };

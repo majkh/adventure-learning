@@ -3,7 +3,9 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import { authentication } from './authentication'
-// Vue.use(require('vue-moment'));
+import VModal from 'vue-js-modal'
+
+Vue.use(VModal)
 
 Vue.config.productionTip = false
 

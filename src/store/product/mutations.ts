@@ -1,6 +1,6 @@
 import { MutationTree } from 'vuex';
 import { ProductState, Product } from './types';
-import { PRODUCTS_ADD_ALL, PRODUCT_UPDATE, SKIP_SET, PRODUCTS_SET_SYNCED } from './mutation-types';
+import { PRODUCTS_ADD_ALL, PRODUCT_UPDATE, SKIP_SET, PRODUCTS_SET_SYNCED, PRODUCT_ADD_TO_CART } from './mutation-types';
 
 export const mutations: MutationTree<ProductState> = {
     [PRODUCTS_ADD_ALL](state: ProductState, payload: Array<Product>) {
@@ -20,5 +20,8 @@ export const mutations: MutationTree<ProductState> = {
     },
     [PRODUCTS_SET_SYNCED](state: ProductState, value: number) {
         state.synced = value;
+    },
+    [PRODUCT_ADD_TO_CART](state: ProductState, payload: Product) {
+        state.cart.push(payload);
     }
 };

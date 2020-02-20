@@ -4,7 +4,7 @@
       <router-link to="/">Home</router-link>
       <router-link to="/products">Products</router-link>
     </div>
-    <span class="menu-cart">Cart</span>
+    <span class="menu-cart" @click="$modal.show('cart')">Cart</span>
   </div>
 </template>
 <script lang="ts">

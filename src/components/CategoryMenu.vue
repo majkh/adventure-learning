@@ -1,5 +1,5 @@
 <template >
-  <div class="category-container" @mouseleave="activeCategory = undefined">
+  <div class="category-container" @mouseleave="toggleSubCategories()">
     <div class="category-menu-list">
       <div
         @mouseenter="activeCategory = category"
@@ -30,7 +30,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { createNamespacedHelpers } from "vuex";
-import { CategorySetOption } from "../../store/filter/types";
+import { CategorySetOption } from "@/store/filter/types";
 const { mapState, mapGetters } = createNamespacedHelpers("filters");
 
 @Component({
@@ -49,6 +49,7 @@ const { mapState, mapGetters } = createNamespacedHelpers("filters");
   }
 })
 export default class CategoryMenu extends Vue {
+  private activeCategory?: Object = undefined;
   setCategory = (category: string, subcategory?: string): void => {
     const categoryOption: CategorySetOption = {
       Category: category,
@@ -56,6 +57,11 @@ export default class CategoryMenu extends Vue {
     };
     this.$store.dispatch("filters/CATEGORY_SET_SELECTED", categoryOption);
   };
+  toggleSubCategories() {
+    if (!this.$store.getters["filters/getIsSubCategoryChoosen"]()) {
+      this.activeCategory = undefined;
+    }
+  }
 }
 </script>
 

@@ -23,15 +23,15 @@ export class FilterOptions {
     Color?: string;
     Size?: string;
     Style?: string;
-    // constructor() {
-    //     this.Category = undefined;
-    //     this.SubCategory = undefined;
-    //     this.PriceMax = undefined;
-    //     this.PriceMin = undefined;
-    //     this.Color = undefined;
-    //     this.Size = undefined;
-    //     this.Style = undefined;
-    // }
+    constructor() {
+        this.Category = undefined;
+        this.SubCategory = undefined;
+        this.PriceMax = undefined;
+        this.PriceMin = undefined;
+        this.Color = undefined;
+        this.Size = undefined;
+        this.Style = undefined;
+    }
 
 }
 

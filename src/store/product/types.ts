@@ -5,7 +5,7 @@ export interface ProductState {
     products: Array<Product>;
     take: number;
     skip: number;
-    cart?: Array<Product>;
+    cart: Array<Product>;
     synced?: number;
 }
 

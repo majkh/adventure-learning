@@ -12,6 +12,7 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import ProductFilterSelect from "./ProductFilterSelect.vue";
 import ProductFilterRange from "./ProductFilterRange.vue";
+import { FilterOptions } from "@/store/filter/types";
 @Component({
   components: {
     ProductFilterSelect,
@@ -20,7 +21,7 @@ import ProductFilterRange from "./ProductFilterRange.vue";
 })
 export default class ProductFilters extends Vue {
   get selectFilters(): Array<{
-    property: string;
+    property: keyof FilterOptions;
     name: string;
     values: Array<string | number>;
   }> {
@@ -39,18 +40,18 @@ export default class ProductFilters extends Vue {
     ];
   }
   get rangeFilters(): Array<{
-    property: string;
+    property: keyof FilterOptions;
     name: string;
     range: { min: number; max: number; defaultValue: number };
   }> {
     return [
       {
-        property: "minPrice",
+        property: "PriceMin",
         name: "Min Price",
         range: { min: 0, max: 1000, defaultValue: 0 }
       },
       {
-        property: "maxPrice",
+        property: "PriceMax",
         name: "Max Price",
         range: { min: 0, max: 1000, defaultValue: 1000 }
       }

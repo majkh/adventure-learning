@@ -1,15 +1,16 @@
 <template>
   <div id="app">
     <NavMenu />
+    <CartModal />
     <router-view />
   </div>
 </template>
 <script>
 import NavMenu from "@/components/NavMenu.vue";
-
+import CartModal from "@/components/cart/CartModal.vue";
 export default {
   name: "app",
-  components: { NavMenu }
+  components: { NavMenu, CartModal }
 };
 </script>
 <style lang="scss">

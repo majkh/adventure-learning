@@ -7,7 +7,7 @@
 
 <script>
 import ProductList from "@/components/ProductList.vue";
-import CategoryMenu from "@/components/filter/CategoryMenu.vue";
+import CategoryMenu from "@/components/CategoryMenu.vue";
 export default {
   name: "products",
   components: {
