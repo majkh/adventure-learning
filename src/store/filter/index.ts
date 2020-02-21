@@ -8,6 +8,7 @@ import { RootState } from '../types';
 export const state: FilterState = {
     productCategories: undefined,
     currentFilter: new FilterOptions(),
+    searches: new Array<string>(),
     synced: -1
 }
 

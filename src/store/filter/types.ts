@@ -1,6 +1,7 @@
 export interface FilterState {
     productCategories?: Array<ProductCategories>;
     currentFilter: FilterOptions;
+    searches: Array<string>;
     synced: number;
 }
 
@@ -12,12 +13,13 @@ export interface CategorySetOption {
 
 export interface FilterSetOption {
     Property: keyof FilterOptions;
-    Value: string;
+    Value?: string;
 }
 
 export class FilterOptions {
     Category?: string;
     SubCategory?: string;
+    Name?: string;
     PriceMax?: string;
     PriceMin?: string;
     Color?: string;
@@ -26,6 +28,7 @@ export class FilterOptions {
     constructor() {
         this.Category = undefined;
         this.SubCategory = undefined;
+        this.Name = undefined;
         this.PriceMax = undefined;
         this.PriceMin = undefined;
         this.Color = undefined;

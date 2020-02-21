@@ -1,7 +1,7 @@
 <template>
-  <modal name="cart" :width="300" :min-height="300" :scrollable="true">
+  <modal name="cart" :width="800" :minHeight="300" height="auto" :scrollable="true">
     <div class="modal-container" v-if="cart.length>0">
-      <div class="cart-item" v-for="cartItem in cart" :key="cartItem.productId">
+      <div class="cart-item" v-for="(cartItem, index) in cart" :key="index">
         <span class="cart-item-name">{{cartItem.name}}</span>
       </div>
     </div>

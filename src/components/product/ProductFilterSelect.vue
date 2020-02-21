@@ -4,36 +4,27 @@
     class="filter-select"
     :options="selectOptions.values"
     :value="getFilterValue(selectOptions.property)"
-    @input="onSelected"
+    @input="setFilter({Property: selectOptions.property, Value: $event})"
   ></v-select>
 </template>
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Emit, Vue } from "vue-property-decorator";
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
-import { createNamespacedHelpers } from "vuex";
-const { mapGetters } = createNamespacedHelpers("filters");
-
 Vue.component("v-select", vSelect);
+import { FilterSetOption } from "@/store/filter/types";
+import { namespace } from "vuex-class";
+const filter = namespace("filters");
 
-@Component({
-  computed: {
-    ...mapGetters(["getFilterValue"])
-  }
-})
+@Component
 export default class ProductFilterSelect extends Vue {
   @Prop(Object) private selectOptions!: {
     property: string;
     name: string;
     values: Array<string | number>;
   };
-  onSelected(value: any) {
-    const setOption = {
-      Property: this.selectOptions.property,
-      Value: value ? value : undefined
-    };
-    this.$store.dispatch("filters/FILTER_SET_AND_SEARCH", setOption);
-  }
+  @Emit() setFilter(option: FilterSetOption) {}
+  @filter.Getter getFilterValue!: string;
 }
 </script>
 

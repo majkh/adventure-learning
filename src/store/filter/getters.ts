@@ -1,6 +1,7 @@
 import { GetterTree } from 'vuex';
 import { FilterState, FilterOptions } from './types';
 import { RootState } from '../types';
+import { SEARCH_PREVIOUS_STRINGS } from './mutation-types';
 
 export const getters: GetterTree<FilterState, RootState> = {
     getCategoryActive: (state) => (categoryId: string): boolean => {
@@ -17,5 +18,11 @@ export const getters: GetterTree<FilterState, RootState> = {
     },
     getIsSubCategoryChoosen: (state) => (): boolean => {
         return state.currentFilter.SubCategory !== undefined
+    },
+    [SEARCH_PREVIOUS_STRINGS]: (state) => (value: string) => {
+        const searchString = new RegExp("^" + value)
+        return state.searches.filter((search) => {
+            return searchString.test(search);
+        })
     }
 };

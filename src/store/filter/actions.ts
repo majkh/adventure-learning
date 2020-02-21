@@ -1,7 +1,7 @@
 import { ActionTree } from 'vuex';
 import { FilterState, FilterSetOption, CategorySetOption, FilterOptions } from './types';
 import { RootState } from '../types';
-import { FILTER_SET, FILTER_REMOVE, CATEGORY_SET_SELECTED, CATEGORY_ADD_ALL, CATEGORY_SET_SYNCED, FILTER_CLEAR, FILTER_SET_AND_SEARCH, } from './mutation-types';
+import { FILTER_SET, FILTER_REMOVE, CATEGORY_SET_SELECTED, CATEGORY_ADD_ALL, CATEGORY_SET_SYNCED, FILTER_CLEAR, FILTER_SET_AND_SEARCH, SEARCH_ADD, } from './mutation-types';
 import { productCategories } from '@/data/mockdata';
 import ApiProduct from '@/services/api'
 import moment from 'moment'
@@ -30,12 +30,12 @@ export const actions: ActionTree<FilterState, RootState> = {
                 .then(response => {
                     commit(CATEGORY_ADD_ALL, [...[{
                         productCategoryID: undefined,
-                        name: 'All'
+                        name: 'All',
                     }], ...response]);
                     commit(CATEGORY_SET_SYNCED)
                 })
                 .catch(() => {
-                    commit(CATEGORY_ADD_ALL, productCategories)
+                    // commit(CATEGORY_ADD_ALL, productCategories)
                 })
         }
     },
@@ -52,4 +52,7 @@ export const actions: ActionTree<FilterState, RootState> = {
     [FILTER_REMOVE](context, key: keyof FilterOptions) {
         context.commit(FILTER_REMOVE, key);
     },
+    [SEARCH_ADD]({ commit }, payload: string) {
+        commit(SEARCH_ADD, payload)
+    }
 };

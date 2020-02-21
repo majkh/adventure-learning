@@ -7,7 +7,10 @@
       :value="getFilterValue(rangeOptions.property) || rangeOptions.range.defaultValue"
       v-bind:min="rangeOptions.range.min"
       v-bind:max="rangeOptions.range.max"
-      @mouseup="onSelected"
+      @mouseup="$emit('set-filter', {Property: selectOptions.property, Value:  $event === rangeOptions.range.min ||
+        $event === rangeOptions.range.max
+          ? undefined
+          : $event})"
     />
 
     <span>{{getFilterValue(rangeOptions.property) || rangeOptions.range.defaultValue}}</span>
@@ -29,18 +32,6 @@ export default class ProductFilterRange extends Vue {
     name: string;
     range: { min: number; max: number; defaultValue: number };
   };
-  onSelected(event: any): void {
-    const value = event.target.value;
-    const setOption = {
-      Property: this.rangeOptions.property,
-      Value:
-        value === this.rangeOptions.range.min ||
-        value === this.rangeOptions.range.max
-          ? undefined
-          : value
-    };
-    this.$store.dispatch("filters/FILTER_SET_AND_SEARCH", setOption);
-  }
 }
 </script>
 
