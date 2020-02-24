@@ -6,8 +6,8 @@
   </div>
 </template>
 <script>
-import NavMenu from "@/components/NavMenu.vue";
-import CartModal from "@/components/cart/CartModal.vue";
+import NavMenu from "./components/NavMenu.vue";
+import CartModal from "./components/cart/CartModal.vue";
 export default {
   name: "app",
   components: { NavMenu, CartModal }

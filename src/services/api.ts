@@ -16,7 +16,7 @@ export default class ApiProduct {
         })
             .then(response => { return Promise.resolve(response) })
             .catch(err => {
-                console.log(err);
+                // console.error(err);
                 // authentication.signIn(); // TODO: uncomment when authentication is open
                 throw err;
             })
@@ -28,20 +28,14 @@ export default class ApiProduct {
                 return Promise.resolve(response.data)
             })
             .catch(error => {
-                console.log(error);
                 return Promise.reject(error);
             });
     }
     static getProducts = (skip: number, take: number): Promise<Array<Product>> => {
         return ApiProduct.get("product")
             .then(response => {
-                console.log(response)
                 return Promise.resolve(response.data)
             })
-            .catch(error => {
-                console.log(error)
-                return Promise.reject(error);
-            });
     }
     static getCategories = (): Promise<Array<ProductCategories>> => {
         return ApiProduct.get("product/category")
@@ -49,7 +43,6 @@ export default class ApiProduct {
                 return Promise.resolve(response.data)
             })
             .catch(error => {
-                console.log(error);
                 return Promise.reject(error);
             });
     }
@@ -60,7 +53,6 @@ export default class ApiProduct {
                 return Promise.resolve(response.data)
             })
             .catch(error => {
-                console.log(error);
                 return Promise.reject(error);
             });
     }
