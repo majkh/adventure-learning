@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Products from '../views/Products.vue'
+import PageNotFound from '@/views/PageNotFound.vue'
 import { authentication } from '@/authentication'
 
 Vue.use(VueRouter)
@@ -42,6 +43,11 @@ const routes = [
     meta: {
       requiresAuthentication: true
     }
+  },
+  {
+    path: '/*',
+    name: 'not-found',
+    component: PageNotFound
   }
 ]
 
