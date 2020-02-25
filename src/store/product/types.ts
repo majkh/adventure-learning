@@ -17,7 +17,15 @@ interface ProductPhoto {
     largePhotoFileName: string;
 }
 
-export interface ProductReview {
+export interface ProductReviewAddModel {
+    productId: number,
+    reviewerName: string,
+    emailAddress: string,
+    rating: number,
+    comment: string
+}
+
+export interface ProductReview extends ProductReviewAddModel {
     productReviewID: number,
     productId: number,
     reviewerName: string,
@@ -42,7 +50,7 @@ export interface Product {
     subCategory?: string;
     model?: string;
     photo: ProductPhoto;
-    review?: Array<ProductReview>;
+    review: Array<ProductReview>;
     updated?: number;
 }
 

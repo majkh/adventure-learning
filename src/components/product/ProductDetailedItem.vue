@@ -14,16 +14,23 @@
       <span class="product-info-text" v-if="product.color">Color: {{product.color }}</span>
       <span
         v-if="product.review"
-      >Rating: {{avgRating}} stars out of {{product.review.length}} reviewers</span>
+      >Rating: {{avgRating || 0}} stars out of {{product.review.length}} reviewers</span>
+      <button @click="$modal.show('review')">Add Review</button>
     </div>
+    <ProductReviewAdd :productId="product.productId" />
   </div>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { Product } from "@/store/product/types";
 import { createNamespacedHelpers } from "vuex";
+import ProductReviewAdd from "./ProductReviewAdd.vue";
 const { mapGetters } = createNamespacedHelpers("products");
-@Component
+@Component({
+  components: {
+    ProductReviewAdd
+  }
+})
 export default class ProductDetailedItem extends Vue {
   @Prop(Object) private product!: Product;
   get avgRating(): number {

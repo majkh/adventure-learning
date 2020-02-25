@@ -1,7 +1,7 @@
 import { ActionTree } from 'vuex';
-import { ProductState, Product } from './types';
+import { ProductState, Product, ProductReviewAddModel, ProductReview } from './types';
 import { RootState } from '../types';
-import { PRODUCTS_ADD_ALL, SKIP_SET, PRODUCTS_SEARCH, PRODUCTS_SET_SYNCED, PRODUCT_UPDATE, PRODUCT_ADD_TO_CART } from './mutation-types';
+import { PRODUCTS_ADD_ALL, SKIP_SET, PRODUCTS_SEARCH, PRODUCTS_SET_SYNCED, PRODUCT_UPDATE, PRODUCT_ADD_TO_CART, PRODUCT_ADD_REVIEW } from './mutation-types';
 import { mockProducts, productCategories } from '@/data/mockdata';
 import ApiProduct from '@/services/api'
 import moment from 'moment'
@@ -27,12 +27,29 @@ export const actions: ActionTree<ProductState, RootState> = {
                 })
                 .catch(() => {
 
-                    commit(PRODUCTS_SET_SYNCED, moment().valueOf());
-                    commit(PRODUCTS_ADD_ALL, mockProducts);
+                    // commit(PRODUCTS_SET_SYNCED, moment().valueOf());
+                    // commit(PRODUCTS_ADD_ALL, mockProducts);
                 });
         }
 
 
+    },
+    [PRODUCT_ADD_REVIEW]({ commit, state, dispatch }, payload: ProductReviewAddModel) {
+        ApiProduct.addReview(payload)
+            .then((response: ProductReview) => {
+                commit(PRODUCT_ADD_REVIEW, response);
+            })
+            .catch(err => {
+                commit(PRODUCT_ADD_REVIEW, {
+                    productId: 937,
+                    productReviewID: 1243,
+                    rating: 3,
+                    reviewerName: 'majk',
+                    reviewDate: new Date(),
+                    emailAddress: "majk@test.com",
+                    comments: "Test response comment"
+                } as ProductReview);
+            })
     },
     [SKIP_SET]({ commit }, skip: number) {
         commit(SKIP_SET, skip);
@@ -60,8 +77,8 @@ export const actions: ActionTree<ProductState, RootState> = {
                 commit(PRODUCTS_SET_SYNCED, -1);
             })
             .catch(() => {
-                commit(PRODUCTS_ADD_ALL, mockProducts);
-                commit(PRODUCTS_SET_SYNCED, -1);
+                // commit(PRODUCTS_ADD_ALL, mockProducts);
+                // commit(PRODUCTS_SET_SYNCED, -1);
             });
     },
     addToCart({ commit, getters }, id: number) {

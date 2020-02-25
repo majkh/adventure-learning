@@ -16,56 +16,56 @@ describe('filter-mutations', () => {
         }
 
         let option: FilterSetOption = {
-            Property: "Category",
+            Property: "category",
             Value: "1"
         }
         FILTER_SET(state, option)
-        expect(state.currentFilter.Category).toEqual("1")
+        expect(state.currentFilter.category).toEqual("1")
 
         option = {
-            Property: "SubCategory",
+            Property: "subCategory",
             Value: "2"
         }
         FILTER_SET(state, option)
-        expect(state.currentFilter.SubCategory).toEqual("2")
+        expect(state.currentFilter.subCategory).toEqual("2")
 
         option = {
-            Property: "PriceMax",
+            Property: "maxPrice",
             Value: "3"
         }
         FILTER_SET(state, option)
-        expect(state.currentFilter.PriceMax).toEqual("3")
+        expect(state.currentFilter.maxPrice).toEqual("3")
 
 
         option = {
-            Property: "PriceMin",
+            Property: "minPrice",
             Value: "3"
         }
         FILTER_SET(state, option)
         expect(state.currentFilter).toEqual({
-            Category: "1",
-            SubCategory: "2",
-            PriceMax: "3",
-            PriceMin: "3",
-            Color: undefined,
-            Size: undefined,
-            Style: undefined
+            category: "1",
+            subCategory: "2",
+            maxPrice: "3",
+            minPrice: "3",
+            color: undefined,
+            size: undefined,
+            style: undefined
 
-        })
+        } as FilterOptions)
 
         option = {
-            Property: "PriceMin",
+            Property: "minPrice",
             Value: undefined
         }
         FILTER_SET(state, option)
         expect(state.currentFilter).toEqual({
-            Category: "1",
-            SubCategory: "2",
-            PriceMax: "3",
-            PriceMin: undefined,
-            Color: undefined,
-            Size: undefined,
-            Style: undefined
+            category: "1",
+            subCategory: "2",
+            maxPrice: "3",
+            minPrice: undefined,
+            color: undefined,
+            size: undefined,
+            style: undefined
         })
     })
 })

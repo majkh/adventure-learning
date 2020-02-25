@@ -1,6 +1,6 @@
 import { MutationTree } from 'vuex';
-import { ProductState, Product } from './types';
-import { PRODUCTS_ADD_ALL, PRODUCT_UPDATE, SKIP_SET, PRODUCTS_SET_SYNCED, PRODUCT_ADD_TO_CART } from './mutation-types';
+import { ProductState, Product, ProductReviewAddModel, ProductReview } from './types';
+import { PRODUCTS_ADD_ALL, PRODUCT_UPDATE, SKIP_SET, PRODUCTS_SET_SYNCED, PRODUCT_ADD_TO_CART, PRODUCT_ADD_REVIEW } from './mutation-types';
 
 export const mutations: MutationTree<ProductState> = {
     [PRODUCTS_ADD_ALL](state: ProductState, payload: Array<Product>) {
@@ -23,5 +23,13 @@ export const mutations: MutationTree<ProductState> = {
     },
     [PRODUCT_ADD_TO_CART](state: ProductState, payload: Product) {
         state.cart.push(payload);
+    },
+    [PRODUCT_ADD_REVIEW](state: ProductState, payload: ProductReview) {
+        let productIndex = state.products.findIndex(el => { return el.productId === payload.productId });
+        if (productIndex < -1) {
+            throw "Unexpected error in PRODUCT_ADD_REVIEW"
+        }
+        state.products[productIndex].review.push(payload)
+
     }
 };

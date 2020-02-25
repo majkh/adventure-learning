@@ -17,23 +17,25 @@ export interface FilterSetOption {
 }
 
 export class FilterOptions {
-    Category?: string;
-    SubCategory?: string;
-    Name?: string;
-    PriceMax?: string;
-    PriceMin?: string;
-    Color?: string;
-    Size?: string;
-    Style?: string;
+    category?: string;
+    subCategory?: string;
+    name?: string;
+    maxPrice?: string;
+    minPrice?: string;
+    color?: string;
+    size?: string;
+    style?: string;
+    model?: string;
     constructor() {
-        this.Category = undefined;
-        this.SubCategory = undefined;
-        this.Name = undefined;
-        this.PriceMax = undefined;
-        this.PriceMin = undefined;
-        this.Color = undefined;
-        this.Size = undefined;
-        this.Style = undefined;
+        this.category = undefined;
+        this.subCategory = undefined;
+        this.name = undefined;
+        this.maxPrice = undefined;
+        this.minPrice = undefined;
+        this.color = undefined;
+        this.size = undefined;
+        this.style = undefined;
+        this.model = undefined;
     }
 
 }

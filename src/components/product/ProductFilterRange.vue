@@ -7,10 +7,10 @@
       :value="getFilterValue(rangeOptions.property) || rangeOptions.range.defaultValue"
       v-bind:min="rangeOptions.range.min"
       v-bind:max="rangeOptions.range.max"
-      @mouseup="$emit('set-filter', {Property: selectOptions.property, Value:  $event === rangeOptions.range.min ||
+      @mouseup="$emit('set-filter', {Property: rangeOptions.property, Value:  $event.target.value === rangeOptions.range.min ||
         $event === rangeOptions.range.max
           ? undefined
-          : $event})"
+          : $event.target.value})"
     />
 
     <span>{{getFilterValue(rangeOptions.property) || rangeOptions.range.defaultValue}}</span>
@@ -19,19 +19,17 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { createNamespacedHelpers } from "vuex";
-const { mapGetters } = createNamespacedHelpers("filters");
+import { namespace } from "vuex-class";
+const filter = namespace("filters");
 
-@Component({
-  computed: {
-    ...mapGetters(["getFilterValue"])
-  }
-})
+@Component
 export default class ProductFilterRange extends Vue {
   @Prop(Object) private rangeOptions!: {
     property: string;
     name: string;
     range: { min: number; max: number; defaultValue: number };
   };
+  @filter.Getter getFilterValue!: string;
 }
 </script>
 
