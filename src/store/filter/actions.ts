@@ -41,8 +41,8 @@ export const actions: ActionTree<FilterState, RootState> = {
     },
     async [CATEGORY_SET_SELECTED]({ commit, dispatch, state }, payload: CategorySetOption) {
         commit(FILTER_CLEAR);
-        const setCategoryPromise = dispatch(FILTER_SET, { Property: 'Category', Value: payload.Category });
-        const setSubCategoryPromise = dispatch(FILTER_SET, { Property: 'SubCategory', Value: payload.SubCategory });
+        const setCategoryPromise = dispatch(FILTER_SET, { Property: 'category', Value: payload.Category });
+        const setSubCategoryPromise = dispatch(FILTER_SET, { Property: 'subCategory', Value: payload.SubCategory });
 
         Promise.all([setCategoryPromise, setSubCategoryPromise]).then(() => {
 
