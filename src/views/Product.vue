@@ -2,6 +2,7 @@
   <div class="product-wrapper">
     <ProductDetailedItem v-if="product" :product="product" />
     <ProductReviews v-if="product" :reviews="product.review" />
+    <p v-if="!product">Oooops can't find your product...</p>
   </div>
 </template>
 
@@ -38,7 +39,9 @@ export default {
   },
   methods: {
     fetchData() {
-      this.$store.dispatch("products/PRODUCT_UPDATE", this.$route.params.id);
+      this.$store
+        .dispatch("products/PRODUCT_UPDATE", this.$route.params.id)
+        .catch({});
     }
   }
 };

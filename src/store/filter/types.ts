@@ -25,7 +25,6 @@ export class FilterOptions {
     color?: string;
     size?: string;
     style?: string;
-    model?: string;
     constructor() {
         this.category = undefined;
         this.subCategory = undefined;
@@ -35,7 +34,6 @@ export class FilterOptions {
         this.color = undefined;
         this.size = undefined;
         this.style = undefined;
-        this.model = undefined;
     }
 
 }

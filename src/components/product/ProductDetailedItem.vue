@@ -15,7 +15,7 @@
       <span
         v-if="product.review"
       >Rating: {{avgRating || 0}} stars out of {{product.review.length}} reviewers</span>
-      <button @click="$modal.show('review')">Add Review</button>
+      <button class="product-add-review" @click="$modal.show('review')">Add Review</button>
     </div>
     <ProductReviewAdd :productId="product.productId" />
   </div>
@@ -98,6 +98,10 @@ export default class ProductDetailedItem extends Vue {
     font-size: $font-size-normal;
     line-height: 32px;
     font-weight: 700;
+  }
+  .product-add-review {
+    margin-right: auto;
+    width: 150px;
   }
 }
 </style>

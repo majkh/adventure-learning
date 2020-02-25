@@ -7,6 +7,7 @@
         :suggestions="searches"
         @set-search="onSetSearch($event)"
       />
+      <button class="filters-clear">Clear filters</button>
     </div>
     <div class="filter-container-row">
       <ProductFilterSelect
@@ -54,13 +55,13 @@ export default class ProductFilters extends Vue {
   }> {
     return [
       {
-        property: "Color",
+        property: "color",
         name: "Color",
         values: ["Black", "White", "Yellow", "Silver"]
       },
-      { property: "Size", name: "Size", values: ["5", "10", "15", "20"] },
+      { property: "size", name: "Size", values: ["S", "M", "L"] },
       {
-        property: "Style",
+        property: "style",
         name: "Style",
         values: ["Big", "Small", "Fabulous", "Ugly"]
       }
@@ -73,12 +74,12 @@ export default class ProductFilters extends Vue {
   }> {
     return [
       {
-        property: "PriceMin",
+        property: "minPrice",
         name: "Min Price",
         range: { min: 0, max: 1000, defaultValue: 0 }
       },
       {
-        property: "PriceMax",
+        property: "maxPrice",
         name: "Max Price",
         range: { min: 0, max: 1000, defaultValue: 1000 }
       }
@@ -88,7 +89,7 @@ export default class ProductFilters extends Vue {
     this.$store.dispatch("filters/FILTER_SET_AND_SEARCH", setOption);
   }
   onSetSearch(value: string) {
-    const setOption: FilterSetOption = { Property: "Name", Value: value };
+    const setOption: FilterSetOption = { Property: "name", Value: value };
     this.$store;
     this.setFilter(setOption).then(() => {
       this.setSearch(setOption.Value);
@@ -106,5 +107,14 @@ export default class ProductFilters extends Vue {
   align-items: center;
   align-content: stretch;
   margin-top: $margin/2;
+}
+
+.filters-clear {
+  margin-left: $margin;
+  // font-size: $font-size-small;
+  line-height: $font-size-medium;
+  background: white;
+  border-image: none;
+  border-radius: $border-radius;
 }
 </style>

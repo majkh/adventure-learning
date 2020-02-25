@@ -2,7 +2,7 @@ import { ActionTree } from 'vuex';
 import { ProductState, Product, ProductReviewAddModel, ProductReview } from './types';
 import { RootState } from '../types';
 import { PRODUCTS_ADD_ALL, SKIP_SET, PRODUCTS_SEARCH, PRODUCTS_SET_SYNCED, PRODUCT_UPDATE, PRODUCT_ADD_TO_CART, PRODUCT_ADD_REVIEW } from './mutation-types';
-import { mockProducts, productCategories } from '@/data/mockdata';
+// import { mockProducts, productCategories } from '@/data/mockdata';
 import ApiProduct from '@/services/api'
 import moment from 'moment'
 import { FilterOptions } from '../filter/types';

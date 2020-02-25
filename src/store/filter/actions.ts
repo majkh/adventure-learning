@@ -2,7 +2,7 @@ import { ActionTree } from 'vuex';
 import { FilterState, FilterSetOption, CategorySetOption, FilterOptions } from './types';
 import { RootState } from '../types';
 import { FILTER_SET, FILTER_REMOVE, CATEGORY_SET_SELECTED, CATEGORY_ADD_ALL, CATEGORY_SET_SYNCED, FILTER_CLEAR, FILTER_SET_AND_SEARCH, SEARCH_ADD, } from './mutation-types';
-import { productCategories } from '@/data/mockdata';
+// import { productCategories } from '@/data/mockdata';
 import ApiProduct from '@/services/api'
 import moment from 'moment'
 import { PRODUCTS_SEARCH } from '../product/mutation-types';

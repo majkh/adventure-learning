@@ -2,7 +2,6 @@
   <div class="menu-container">
     <div class="menu-nav">
       <router-link to="/">Home</router-link>
-      <router-link to="/products">Products</router-link>
     </div>
     <span class="menu-cart" @click="$modal.show('cart')">Cart</span>
   </div>

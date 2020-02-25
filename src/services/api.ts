@@ -4,9 +4,9 @@ import { Product, ProductReview } from '@/store/product/types';
 import { ProductCategories } from '@/store/filter/types';
 
 export default class ApiProduct {
-    private static get(url: string, data?: any): Promise<any> {
-        return axios.get(url, {
-            data: data,
+    private static post(url: string, params?: any): Promise<any> {
+        return axios.post(url, {
+            data: params,
             // baseURL: 'https://awproject.azurewebsites.net/v1/',
             baseURL: 'https://azuread20200219104755.azurewebsites.net/v1/',
             headers: {
@@ -22,8 +22,8 @@ export default class ApiProduct {
             })
     }
 
-    private static post(url: string, params?: any): Promise<any> {
-        return axios.post(url, {
+    private static get(url: string, params?: any): Promise<any> {
+        return axios.get(url, {
             params: params,
             // baseURL: 'https://awproject.azurewebsites.net/v1/',
             baseURL: 'https://azuread20200219104755.azurewebsites.net/v1/',
@@ -44,7 +44,7 @@ export default class ApiProduct {
         return ApiProduct.post("product/review", data)
             .then(response => {
                 return Promise.resolve(response.data)
-            }).catch(error => {
+            }).catch((error: any) => {
                 return Promise.reject(error);
             });
     }
@@ -55,7 +55,7 @@ export default class ApiProduct {
             .then(response => {
                 return Promise.resolve(response.data)
             })
-            .catch(error => {
+            .catch((error: any) => {
                 return Promise.reject(error);
             });
     }
@@ -70,7 +70,7 @@ export default class ApiProduct {
             .then(response => {
                 return Promise.resolve(response.data)
             })
-            .catch(error => {
+            .catch((error: any) => {
                 return Promise.reject(error);
             });
     }
@@ -80,7 +80,7 @@ export default class ApiProduct {
             .then(response => {
                 return Promise.resolve(response.data)
             })
-            .catch(error => {
+            .catch((error: any) => {
                 return Promise.reject(error);
             });
     }
