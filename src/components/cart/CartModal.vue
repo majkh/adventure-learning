@@ -9,16 +9,14 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { createNamespacedHelpers } from "vuex";
-const { mapState, mapActions, mapGetters } = createNamespacedHelpers(
-  "products"
-);
-@Component({
-  computed: {
-    ...mapState(["cart"])
-  }
-})
-export default class CartModal extends Vue {}
+import { namespace } from "vuex-class";
+import { Product } from "@/store/product/types";
+const productStore = namespace("products");
+@Component
+export default class CartModal extends Vue {
+  @productStore.State
+  private cart!: Array<Product>;
+}
 </script>
 
 <style lang="scss" scoped >

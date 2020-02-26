@@ -24,7 +24,7 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue, Emit } from "vue-property-decorator";
 import { Getter, State } from "vuex-class";
 
 const namespace: string = "filters";
@@ -33,6 +33,7 @@ export default class ProductFilterSelect extends Vue {
   @Prop(String) placeholder!: string;
   @Prop({ type: Array, required: true }) suggestions!: Array<string>;
   @Prop({ type: String, required: true }) searchInput!: string;
+  @Emit() setSearch(input: string) {}
   currentInput: string = this.searchInput;
   current: number = -1;
   open: boolean = false;
@@ -49,7 +50,7 @@ export default class ProductFilterSelect extends Vue {
       this.current = -1;
       this.open = false;
     } else {
-      this.$emit("set-search", this.currentInput);
+      this.setSearch(this.currentInput);
     }
   }
 

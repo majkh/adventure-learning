@@ -14,13 +14,13 @@
         :selectOptions="select"
         v-for="select in selectFilters"
         :key="select.property"
-        @set-filter="onSetFilter($event)"
+        @set-filter="FILTER_SET_AND_SEARCH($event)"
       />
       <ProductFilterRange
         :rangeOptions="range"
         v-for="range in rangeFilters"
         :key="range.property"
-        @set-filter="onSetFilter($event)"
+        @set-filter="FILTER_SET_AND_SEARCH($event)"
       />
     </div>
   </div>
@@ -31,12 +31,12 @@ import ProductFilterSelect from "./ProductFilterSelect.vue";
 import ProductFilterRange from "./ProductFilterRange.vue";
 import ProductSearch from "./ProductSearch.vue";
 import { FilterOptions, FilterSetOption } from "@/store/filter/types";
-import { State, Action } from "vuex-class";
+import { namespace } from "vuex-class";
+const filterStore = namespace("filters");
 import {
   FILTER_SET_AND_SEARCH,
   SEARCH_ADD
 } from "@/store/filter/mutation-types";
-const namespace: string = "filters";
 @Component({
   components: {
     ProductFilterSelect,
@@ -45,9 +45,9 @@ const namespace: string = "filters";
   }
 })
 export default class ProductFilters extends Vue {
-  @State("searches", { namespace }) searches!: Array<string>;
-  @Action(FILTER_SET_AND_SEARCH, { namespace }) setFilter!: any;
-  @Action(SEARCH_ADD, { namespace }) setSearch!: any;
+  @filterStore.State searches!: Array<string>;
+  @filterStore.Action FILTER_SET_AND_SEARCH!: any;
+  @filterStore.Action SEARCH_ADD!: any;
   get selectFilters(): Array<{
     property: keyof FilterOptions;
     name: string;
@@ -85,14 +85,11 @@ export default class ProductFilters extends Vue {
       }
     ];
   }
-  onSetFilter(setOption: any) {
-    this.$store.dispatch("filters/FILTER_SET_AND_SEARCH", setOption);
-  }
   onSetSearch(value: string) {
     const setOption: FilterSetOption = { Property: "name", Value: value };
     this.$store;
-    this.setFilter(setOption).then(() => {
-      this.setSearch(setOption.Value);
+    this[FILTER_SET_AND_SEARCH](setOption).then(() => {
+      this[SEARCH_ADD](setOption.Value);
     });
   }
 }

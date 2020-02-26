@@ -81,7 +81,7 @@ export const actions: ActionTree<ProductState, RootState> = {
                 // commit(PRODUCTS_SET_SYNCED, -1);
             });
     },
-    addToCart({ commit, getters }, id: number) {
+    [PRODUCT_ADD_TO_CART]({ commit, getters }, id: number) {
 
         const product = getters.getProductById(id);
         commit(PRODUCT_ADD_TO_CART, product)

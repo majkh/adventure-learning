@@ -17,26 +17,17 @@ import { Component, Vue } from "vue-property-decorator";
 import ProductListItem from "./product/ProductListItem.vue";
 import ProductFilters from "./product/ProductFilters.vue";
 import { Product } from "@/store/product/types";
-import { createNamespacedHelpers } from "vuex";
-const { mapState, mapActions, mapGetters } = createNamespacedHelpers(
-  "products"
-);
+import { namespace } from "vuex-class";
+const prouductStore = namespace("products");
 
 @Component({
-  computed: {
-    ...mapState(["products"]),
-    ...mapGetters(["getShouldFetch"])
-  },
   components: {
     ProductListItem,
     ProductFilters
   }
 })
 export default class ProductList extends Vue {
-  public count!: number;
-  public products!: Array<object>;
-  public expensiveProducts!: Array<object>;
-  getShouldFetch!: any;
+  @prouductStore.State products!: Array<Product>;
 }
 </script>
 

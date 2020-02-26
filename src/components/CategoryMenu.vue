@@ -29,37 +29,36 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { createNamespacedHelpers } from "vuex";
-import { CategorySetOption } from "@/store/filter/types";
-const { mapState, mapGetters } = createNamespacedHelpers("filters");
+import { CategorySetOption, ProductCategories } from "@/store/filter/types";
+import {
+  CATEGORY_SET_SELECTED,
+  CATEGORY_ADD_ALL
+} from "@/store/filter/mutation-types";
+import { namespace } from "vuex-class";
+const filterStore = namespace("filters");
 
-@Component({
-  computed: {
-    ...mapState(["productCategories"]),
-    ...mapGetters(["getCategoryActive", "getSubCategoryActive"])
-  },
-  data() {
-    return {
-      activeCategory: undefined,
-      show: false
-    };
-  },
-  created() {
-    this.$store.dispatch("filters/CATEGORY_ADD_ALL");
-  }
-})
+@Component
 export default class CategoryMenu extends Vue {
-  private activeCategory?: Object = undefined;
+  @filterStore.State productCategories!: Array<ProductCategories>;
+  @filterStore.Getter getCategoryActive!: boolean;
+  @filterStore.Getter getSubCategoryActive!: boolean;
+  @filterStore.Getter getIsSubCategoryChoosen!: boolean;
+  @filterStore.Action CATEGORY_SET_SELECTED!: any;
+  @filterStore.Action CATEGORY_ADD_ALL!: any;
+  private activeCategory?: Object | null = null;
+  created() {
+    this[CATEGORY_ADD_ALL]();
+  }
   setCategory = (category: string, subcategory?: string): void => {
     const categoryOption: CategorySetOption = {
       Category: category,
       SubCategory: subcategory
     };
-    this.$store.dispatch("filters/CATEGORY_SET_SELECTED", categoryOption);
+    this[CATEGORY_SET_SELECTED](categoryOption);
   };
   toggleSubCategories() {
-    if (!this.$store.getters["filters/getIsSubCategoryChoosen"]()) {
-      this.activeCategory = undefined;
+    if (!this.getIsSubCategoryChoosen) {
+      this.activeCategory = null;
     }
   }
 }

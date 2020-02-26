@@ -14,19 +14,19 @@
     <span class="product-info-row product-info">Weight: {{product.weight}}</span>
     <span class="product-info-row product-info" v-if="product.size">Size: {{product.size }}</span>
     <span class="product-info-row product-info" v-if="product.color">Color: {{product.color }}</span>
-    <button @click="addToCart(product.productId)">Add to cart</button>
+    <button @click="PRODUCT_ADD_TO_CART(product.productId)">Add to cart</button>
   </div>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { Product } from "@/store/product/types";
+import { namespace } from "vuex-class";
+const productStore = namespace("products");
 
 @Component
 export default class ProductListItem extends Vue {
   @Prop(Object) private product!: Product;
-  addToCart(id: number) {
-    this.$store.dispatch("products/addToCart", id);
-  }
+  @productStore.Action PRODUCT_ADD_TO_CART!: void;
 }
 </script>
 
